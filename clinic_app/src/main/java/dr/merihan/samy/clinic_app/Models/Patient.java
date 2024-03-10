@@ -7,101 +7,102 @@ import java.util.Objects;
 public class Patient {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private String phoneNumber;
+    private int PatientId;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private String Password;
+    private String Phone;
+
 
 
     public Patient() {
     }
 
-    public Patient(int id, String firstName, String lastName, String email, String password, String phoneNumber) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
+    public Patient(int PatientId, String FirstName, String LastName, String Email, String Password, String Phone) {
+        this.PatientId = PatientId;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.Phone = Phone;
     }
 
-    public int getId() {
-        return this.id;
+    public int getPatientId() {
+        return this.PatientId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPatientId(int PatientId) {
+        this.PatientId = PatientId;
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return this.FirstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
     public String getLastName() {
-        return this.lastName;
+        return this.LastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 
     public String getEmail() {
-        return this.email;
+        return this.Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
     public String getPassword() {
-        return this.password;
+        return this.Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
-    public String getPhoneNumber() {
-        return this.phoneNumber;
+    public String getPhone() {
+        return this.Phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
     }
 
-    public Patient id(int id) {
-        setId(id);
+    public Patient PatientId(int PatientId) {
+        setPatientId(PatientId);
         return this;
     }
 
-    public Patient firstName(String firstName) {
-        setFirstName(firstName);
+    public Patient FirstName(String FirstName) {
+        setFirstName(FirstName);
         return this;
     }
 
-    public Patient lastName(String lastName) {
-        setLastName(lastName);
+    public Patient LastName(String LastName) {
+        setLastName(LastName);
         return this;
     }
 
-    public Patient email(String email) {
-        setEmail(email);
+    public Patient Email(String Email) {
+        setEmail(Email);
         return this;
     }
 
-    public Patient password(String password) {
-        setPassword(password);
+    public Patient Password(String Password) {
+        setPassword(Password);
         return this;
     }
 
-    public Patient phoneNumber(String phoneNumber) {
-        setPhoneNumber(phoneNumber);
+    public Patient Phone(String Phone) {
+        setPhone(Phone);
         return this;
     }
 
@@ -113,23 +114,23 @@ public class Patient {
             return false;
         }
         Patient patient = (Patient) o;
-        return id == patient.id && Objects.equals(firstName, patient.firstName) && Objects.equals(lastName, patient.lastName) && Objects.equals(email, patient.email) && Objects.equals(password, patient.password) && Objects.equals(phoneNumber, patient.phoneNumber);
+        return PatientId == patient.PatientId && Objects.equals(FirstName, patient.FirstName) && Objects.equals(LastName, patient.LastName) && Objects.equals(Email, patient.Email) && Objects.equals(Password, patient.Password) && Objects.equals(Phone, patient.Phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, password, phoneNumber);
+        return Objects.hash(PatientId, FirstName, LastName, Email, Password, Phone);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", phoneNumber='" + getPhoneNumber() + "'" +
+            " PatientId='" + getPatientId() + "'" +
+            ", FirstName='" + getFirstName() + "'" +
+            ", LastName='" + getLastName() + "'" +
+            ", Email='" + getEmail() + "'" +
+            ", Password='" + getPassword() + "'" +
+            ", Phone='" + getPhone() + "'" +
             "}";
     }
     

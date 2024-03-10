@@ -7,70 +7,56 @@ import java.util.Objects;
 public class Admin {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-    private String email;
-    private String username;
-    private String password;
+    private int AdminId;
+    private String Email;
+    private String Password;
+
 
     public Admin() {
     }
 
-    public Admin(int id, String email, String username, String password) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.password = password;
+    public Admin(int AdminId, String Email, String Password) {
+        this.AdminId = AdminId;
+        this.Email = Email;
+        this.Password = Password;
     }
 
-    public int getId() {
-        return this.id;
+    public int getAdminId() {
+        return this.AdminId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAdminId(int AdminId) {
+        this.AdminId = AdminId;
     }
 
     public String getEmail() {
-        return this.email;
+        return this.Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
     public String getPassword() {
-        return this.password;
+        return this.Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
-    public Admin id(int id) {
-        setId(id);
+    public Admin AdminId(int AdminId) {
+        setAdminId(AdminId);
         return this;
     }
 
-    public Admin email(String email) {
-        setEmail(email);
+    public Admin Email(String Email) {
+        setEmail(Email);
         return this;
     }
 
-    public Admin username(String username) {
-        setUsername(username);
-        return this;
-    }
-
-    public Admin password(String password) {
-        setPassword(password);
+    public Admin Password(String Password) {
+        setPassword(Password);
         return this;
     }
 
@@ -82,22 +68,24 @@ public class Admin {
             return false;
         }
         Admin admin = (Admin) o;
-        return id == admin.id && Objects.equals(email, admin.email) && Objects.equals(username, admin.username) && Objects.equals(password, admin.password);
+        return AdminId == admin.AdminId && Objects.equals(Email, admin.Email) && Objects.equals(Password, admin.Password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, username, password);
+        return Objects.hash(AdminId, Email, Password);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", username='" + getUsername() + "'" +
-            ", password='" + getPassword() + "'" +
+            " AdminId='" + getAdminId() + "'" +
+            ", Email='" + getEmail() + "'" +
+            ", Password='" + getPassword() + "'" +
             "}";
     }
+
+   
+   
  
 }

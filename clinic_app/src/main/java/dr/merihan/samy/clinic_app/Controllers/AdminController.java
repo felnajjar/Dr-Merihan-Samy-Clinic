@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 
 
@@ -77,17 +80,19 @@ public class AdminController {
         return mav;
     }
     @PostMapping("/adminLogin")
-    public RedirectView adminLoginProcess(@RequestParam ("email") String email,@RequestParam ("username")String username,@RequestParam ("password")String password,HttpSession session) {
-       Admin dbaAdmin= this.adminRepository.findByUsername(username);
+    public RedirectView adminLoginProcess(@RequestParam ("email") String email,@RequestParam ("password")String password,HttpSession session) {
+       Admin dbaAdmin= this.adminRepository.findByEmail(email);
        Boolean isPasswordMatched=BCrypt.checkpw(password, dbaAdmin.getPassword());
        if(isPasswordMatched){
-            session.setAttribute("username", dbaAdmin.getUsername());
+            session.setAttribute("email",dbaAdmin.getEmail() );
             return new RedirectView();
        }else{
             return new RedirectView();
        }
 
     }
+
+  
     
     
     

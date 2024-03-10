@@ -10,70 +10,101 @@ import java.util.Objects;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String email;
-    private String userName;
-    private String password;
+    private int DoctorId;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private String Password;
+    private String Phone;
+
 
     public Doctor() {
     }
 
-    public Doctor(int id, String email, String userName, String password) {
-        this.id = id;
-        this.email = email;
-        this.userName = userName;
-        this.password = password;
+    public Doctor(int DoctorId, String FirstName, String LastName, String Email, String Password, String Phone) {
+        this.DoctorId = DoctorId;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.Password = Password;
+        this.Phone = Phone;
     }
 
-    public int getId() {
-        return this.id;
+    public int getDoctorId() {
+        return this.DoctorId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDoctorId(int DoctorId) {
+        this.DoctorId = DoctorId;
+    }
+
+    public String getFirstName() {
+        return this.FirstName;
+    }
+
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
+    }
+
+    public String getLastName() {
+        return this.LastName;
+    }
+
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 
     public String getEmail() {
-        return this.email;
+        return this.Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return this.userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
     public String getPassword() {
-        return this.password;
+        return this.Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
-    public Doctor id(int id) {
-        setId(id);
+    public String getPhone() {
+        return this.Phone;
+    }
+
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
+    }
+
+    public Doctor DoctorId(int DoctorId) {
+        setDoctorId(DoctorId);
         return this;
     }
 
-    public Doctor email(String email) {
-        setEmail(email);
+    public Doctor FirstName(String FirstName) {
+        setFirstName(FirstName);
         return this;
     }
 
-    public Doctor userName(String userName) {
-        setUserName(userName);
+    public Doctor LastName(String LastName) {
+        setLastName(LastName);
         return this;
     }
 
-    public Doctor password(String password) {
-        setPassword(password);
+    public Doctor Email(String Email) {
+        setEmail(Email);
+        return this;
+    }
+
+    public Doctor Password(String Password) {
+        setPassword(Password);
+        return this;
+    }
+
+    public Doctor Phone(String Phone) {
+        setPhone(Phone);
         return this;
     }
 
@@ -85,25 +116,27 @@ public class Doctor {
             return false;
         }
         Doctor doctor = (Doctor) o;
-        return id == doctor.id && Objects.equals(email, doctor.email) && Objects.equals(userName, doctor.userName) && Objects.equals(password, doctor.password);
+        return DoctorId == doctor.DoctorId && Objects.equals(FirstName, doctor.FirstName) && Objects.equals(LastName, doctor.LastName) && Objects.equals(Email, doctor.Email) && Objects.equals(Password, doctor.Password) && Objects.equals(Phone, doctor.Phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, userName, password);
+        return Objects.hash(DoctorId, FirstName, LastName, Email, Password, Phone);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " id='" + getId() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", password='" + getPassword() + "'" +
+            " DoctorId='" + getDoctorId() + "'" +
+            ", FirstName='" + getFirstName() + "'" +
+            ", LastName='" + getLastName() + "'" +
+            ", Email='" + getEmail() + "'" +
+            ", Password='" + getPassword() + "'" +
+            ", Phone='" + getPhone() + "'" +
             "}";
     }
 
-
+    
 
     
 }

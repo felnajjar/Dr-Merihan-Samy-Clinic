@@ -9,6 +9,6 @@ import dr.merihan.samy.clinic_app.Models.Admin;
 public interface AdminRepository extends JpaRepository<Admin,Integer> {
     Admin findByEmailAndPassword(String email,String password);
     List<Admin> findById(int id);
-    Admin  findByUsername(String username);
+    Admin  findByEmail(String email);
     
 }
