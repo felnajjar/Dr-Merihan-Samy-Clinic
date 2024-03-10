@@ -11,20 +11,20 @@ public class Appointment {
     private Date StartsAt;
     private Date EndsAt;
     @ManyToOne
-    private Doctor doctor;
+    private Doctor Doctor;
 
     @OneToOne
-    private Patient patient;
+    private Patient Patient;
 
     public Appointment() {
     }
 
-    public Appointment(int AppointmentId, Date StartsAt, Date EndsAt, Doctor doctor, Patient patient) {
+    public Appointment(int AppointmentId, Date StartsAt, Date EndsAt, Doctor Doctor, Patient Patient) {
         this.AppointmentId = AppointmentId;
         this.StartsAt = StartsAt;
         this.EndsAt = EndsAt;
-        this.doctor = doctor;
-        this.patient = patient;
+        this.Doctor = Doctor;
+        this.Patient = Patient;
     }
 
     public int getAppointmentId() {
@@ -52,19 +52,19 @@ public class Appointment {
     }
 
     public Doctor getDoctor() {
-        return this.doctor;
+        return this.Doctor;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctor(Doctor Doctor) {
+        this.Doctor = Doctor;
     }
 
     public Patient getPatient() {
-        return this.patient;
+        return this.Patient;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatient(Patient Patient) {
+        this.Patient = Patient;
     }
 
     public Appointment AppointmentId(int AppointmentId) {
@@ -82,13 +82,13 @@ public class Appointment {
         return this;
     }
 
-    public Appointment doctor(Doctor doctor) {
-        setDoctor(doctor);
+    public Appointment Doctor(Doctor Doctor) {
+        setDoctor(Doctor);
         return this;
     }
 
-    public Appointment patient(Patient patient) {
-        setPatient(patient);
+    public Appointment Patient(Patient Patient) {
+        setPatient(Patient);
         return this;
     }
 
@@ -100,12 +100,12 @@ public class Appointment {
             return false;
         }
         Appointment appointment = (Appointment) o;
-        return AppointmentId == appointment.AppointmentId && Objects.equals(StartsAt, appointment.StartsAt) && Objects.equals(EndsAt, appointment.EndsAt) && Objects.equals(doctor, appointment.doctor) && Objects.equals(patient, appointment.patient);
+        return AppointmentId == appointment.AppointmentId && Objects.equals(StartsAt, appointment.StartsAt) && Objects.equals(EndsAt, appointment.EndsAt) && Objects.equals(Doctor, appointment.Doctor) && Objects.equals(Patient, appointment.Patient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(AppointmentId, StartsAt, EndsAt, doctor, patient);
+        return Objects.hash(AppointmentId, StartsAt, EndsAt, Doctor, Patient);
     }
 
     @Override
@@ -114,8 +114,8 @@ public class Appointment {
             " AppointmentId='" + getAppointmentId() + "'" +
             ", StartsAt='" + getStartsAt() + "'" +
             ", EndsAt='" + getEndsAt() + "'" +
-            ", doctor='" + getDoctor() + "'" +
-            ", patient='" + getPatient() + "'" +
+            ", Doctor='" + getDoctor() + "'" +
+            ", Patient='" + getPatient() + "'" +
             "}";
     }
     

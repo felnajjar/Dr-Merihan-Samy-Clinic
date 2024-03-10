@@ -5,17 +5,17 @@ import java.util.Objects;
 
 public class Review {
     private int ReviewId;
-    private String message;
+    private String Message;
     @OneToOne
-    private Patient patient;
+    private Patient Patient;
 
     public Review() {
     }
 
-    public Review(int ReviewId, String message, Patient patient) {
+    public Review(int ReviewId, String Message, Patient Patient) {
         this.ReviewId = ReviewId;
-        this.message = message;
-        this.patient = patient;
+        this.Message = Message;
+        this.Patient = Patient;
     }
 
     public int getReviewId() {
@@ -27,19 +27,19 @@ public class Review {
     }
 
     public String getMessage() {
-        return this.message;
+        return this.Message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessage(String Message) {
+        this.Message = Message;
     }
 
     public Patient getPatient() {
-        return this.patient;
+        return this.Patient;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPatient(Patient Patient) {
+        this.Patient = Patient;
     }
 
     public Review ReviewId(int ReviewId) {
@@ -47,13 +47,13 @@ public class Review {
         return this;
     }
 
-    public Review message(String message) {
-        setMessage(message);
+    public Review Message(String Message) {
+        setMessage(Message);
         return this;
     }
 
-    public Review patient(Patient patient) {
-        setPatient(patient);
+    public Review Patient(Patient Patient) {
+        setPatient(Patient);
         return this;
     }
 
@@ -65,20 +65,20 @@ public class Review {
             return false;
         }
         Review review = (Review) o;
-        return ReviewId == review.ReviewId && Objects.equals(message, review.message) && Objects.equals(patient, review.patient);
+        return ReviewId == review.ReviewId && Objects.equals(Message, review.Message) && Objects.equals(Patient, review.Patient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ReviewId, message, patient);
+        return Objects.hash(ReviewId, Message, Patient);
     }
 
     @Override
     public String toString() {
         return "{" +
             " ReviewId='" + getReviewId() + "'" +
-            ", message='" + getMessage() + "'" +
-            ", patient='" + getPatient() + "'" +
+            ", Message='" + getMessage() + "'" +
+            ", Patient='" + getPatient() + "'" +
             "}";
     }
     

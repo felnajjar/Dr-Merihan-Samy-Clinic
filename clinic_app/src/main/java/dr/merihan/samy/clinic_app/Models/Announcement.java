@@ -14,16 +14,16 @@ public class Announcement {
     private Date CreatedAt;
 
     @OneToOne
-    private Admin admin;
+    private Admin Admin;
 
     public Announcement() {
     }
 
-    public Announcement(int AnnouncementId, String Message, Date CreatedAt, Admin admin) {
+    public Announcement(int AnnouncementId, String Message, Date CreatedAt, Admin Admin) {
         this.AnnouncementId = AnnouncementId;
         this.Message = Message;
         this.CreatedAt = CreatedAt;
-        this.admin = admin;
+        this.Admin = Admin;
     }
 
     public int getAnnouncementId() {
@@ -51,11 +51,11 @@ public class Announcement {
     }
 
     public Admin getAdmin() {
-        return this.admin;
+        return this.Admin;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setAdmin(Admin Admin) {
+        this.Admin = Admin;
     }
 
     public Announcement AnnouncementId(int AnnouncementId) {
@@ -73,8 +73,8 @@ public class Announcement {
         return this;
     }
 
-    public Announcement admin(Admin admin) {
-        setAdmin(admin);
+    public Announcement Admin(Admin Admin) {
+        setAdmin(Admin);
         return this;
     }
 
@@ -86,12 +86,12 @@ public class Announcement {
             return false;
         }
         Announcement announcement = (Announcement) o;
-        return AnnouncementId == announcement.AnnouncementId && Objects.equals(Message, announcement.Message) && Objects.equals(CreatedAt, announcement.CreatedAt) && Objects.equals(admin, announcement.admin);
+        return AnnouncementId == announcement.AnnouncementId && Objects.equals(Message, announcement.Message) && Objects.equals(CreatedAt, announcement.CreatedAt) && Objects.equals(Admin, announcement.Admin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(AnnouncementId, Message, CreatedAt, admin);
+        return Objects.hash(AnnouncementId, Message, CreatedAt, Admin);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Announcement {
             " AnnouncementId='" + getAnnouncementId() + "'" +
             ", Message='" + getMessage() + "'" +
             ", CreatedAt='" + getCreatedAt() + "'" +
-            ", admin='" + getAdmin() + "'" +
+            ", Admin='" + getAdmin() + "'" +
             "}";
     }
 
