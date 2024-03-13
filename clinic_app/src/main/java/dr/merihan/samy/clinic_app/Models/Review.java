@@ -1,59 +1,66 @@
 package dr.merihan.samy.clinic_app.Models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import java.util.Objects;
 
+@Entity
 public class Review {
-    private int ReviewId;
-    private String Message;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String message;
     @OneToOne
-    private Patient Patient;
+    private Patient patient;
 
     public Review() {
     }
 
-    public Review(int ReviewId, String Message, Patient Patient) {
-        this.ReviewId = ReviewId;
-        this.Message = Message;
-        this.Patient = Patient;
+    public Review(int id, String message, Patient patient) {
+        this.id = id;
+        this.message = message;
+        this.patient = patient;
     }
 
-    public int getReviewId() {
-        return this.ReviewId;
+    public int getId() {
+        return this.id;
     }
 
-    public void setReviewId(int ReviewId) {
-        this.ReviewId = ReviewId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMessage() {
-        return this.Message;
+        return this.message;
     }
 
-    public void setMessage(String Message) {
-        this.Message = Message;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Patient getPatient() {
-        return this.Patient;
+        return this.patient;
     }
 
-    public void setPatient(Patient Patient) {
-        this.Patient = Patient;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public Review ReviewId(int ReviewId) {
-        setReviewId(ReviewId);
+    public Review id(int id) {
+        setId(id);
         return this;
     }
 
-    public Review Message(String Message) {
-        setMessage(Message);
+    public Review message(String message) {
+        setMessage(message);
         return this;
     }
 
-    public Review Patient(Patient Patient) {
-        setPatient(Patient);
+    public Review patient(Patient patient) {
+        setPatient(patient);
         return this;
     }
 
@@ -65,22 +72,21 @@ public class Review {
             return false;
         }
         Review review = (Review) o;
-        return ReviewId == review.ReviewId && Objects.equals(Message, review.Message) && Objects.equals(Patient, review.Patient);
+        return id == review.id && Objects.equals(message, review.message) && Objects.equals(patient, review.patient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ReviewId, Message, Patient);
+        return Objects.hash(id, message, patient);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " ReviewId='" + getReviewId() + "'" +
-            ", Message='" + getMessage() + "'" +
-            ", Patient='" + getPatient() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", message='" + getMessage() + "'" +
+                ", patient='" + getPatient() + "'" +
+                "}";
     }
-    
-    
+
 }

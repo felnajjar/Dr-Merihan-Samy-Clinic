@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+-- phpMyadmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
@@ -24,82 +24,82 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Admin`
+-- Table structure for table `admin`
 --
 
-CREATE TABLE `Admin` (
-  `AdminId` int(11) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Announcement`
+-- Table structure for table `announcement`
 --
 
-CREATE TABLE `Announcement` (
-  `AnnouncementId` int(11) NOT NULL,
-  `Message` varchar(5000) NOT NULL,
-  `AdminId` int(11) NOT NULL,
-  `CreatedAt` date NOT NULL DEFAULT current_timestamp()
+CREATE TABLE `announcement` (
+  `id` int(11) NOT NULL,
+  `message` varchar(5000) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Appointment`
+-- Table structure for table `appointment`
 --
 
-CREATE TABLE `Appointment` (
-  `AppointmentId` int(11) NOT NULL,
-  `PatientId` int(11) NOT NULL,
-  `DoctorId` int(11) NOT NULL,
-  `StartsAt` date NOT NULL,
-  `EndsAt` date NOT NULL
+CREATE TABLE `appointment` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `starts_at` date NOT NULL,
+  `ends_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Doctor`
+-- Table structure for table `doctor`
 --
 
-CREATE TABLE `Doctor` (
-  `DoctorId` int(11) NOT NULL,
-  `FirstName` varchar(255) NOT NULL,
-  `LastName` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Phone` varchar(255) NOT NULL
+CREATE TABLE `doctor` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Patient`
+-- Table structure for table `patient`
 --
 
-CREATE TABLE `Patient` (
-  `PatientId` int(11) NOT NULL,
-  `FirstName` varchar(255) NOT NULL,
-  `LastName` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Phone` varchar(255) NOT NULL
+CREATE TABLE `patient` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Review`
+-- Table structure for table `review`
 --
 
-CREATE TABLE `Review` (
-  `ReviewId` int(11) NOT NULL,
-  `PatientId` int(11) NOT NULL,
-  `Message` varchar(5000) NOT NULL
+CREATE TABLE `review` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `message` varchar(5000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -107,107 +107,107 @@ CREATE TABLE `Review` (
 --
 
 --
--- Indexes for table `Admin`
+-- Indexes for table `admin`
 --
-ALTER TABLE `Admin`
-  ADD PRIMARY KEY (`AdminId`);
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Announcement`
+-- Indexes for table `announcement`
 --
-ALTER TABLE `Announcement`
-  ADD PRIMARY KEY (`AnnouncementId`),
-  ADD KEY `AdminId` (`AdminId`);
+ALTER TABLE `announcement`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `admin_id` (`admin_id`);
 
 --
--- Indexes for table `Appointment`
+-- Indexes for table `appointment`
 --
-ALTER TABLE `Appointment`
-  ADD PRIMARY KEY (`AppointmentId`),
-  ADD KEY `PatientId` (`PatientId`),
-  ADD KEY `DoctorId` (`DoctorId`);
+ALTER TABLE `appointment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `patient_id` (`patient_id`),
+  ADD KEY `doctor_id` (`doctor_id`);
 
 --
--- Indexes for table `Doctor`
+-- Indexes for table `doctor`
 --
-ALTER TABLE `Doctor`
-  ADD PRIMARY KEY (`DoctorId`);
+ALTER TABLE `doctor`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Patient`
+-- Indexes for table `patient`
 --
-ALTER TABLE `Patient`
-  ADD PRIMARY KEY (`PatientId`);
+ALTER TABLE `patient`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `Review`
+-- Indexes for table `review`
 --
-ALTER TABLE `Review`
-  ADD PRIMARY KEY (`ReviewId`),
-  ADD KEY `PatientId` (`PatientId`);
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `patient_id` (`patient_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `Admin`
+-- AUTO_INCREMENT for table `admin`
 --
-ALTER TABLE `Admin`
-  MODIFY `AdminId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Announcement`
+-- AUTO_INCREMENT for table `announcement`
 --
-ALTER TABLE `Announcement`
-  MODIFY `AnnouncementId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `announcement`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Appointment`
+-- AUTO_INCREMENT for table `appointment`
 --
-ALTER TABLE `Appointment`
-  MODIFY `AppointmentId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `appointment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Doctor`
+-- AUTO_INCREMENT for table `doctor`
 --
-ALTER TABLE `Doctor`
-  MODIFY `DoctorId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `doctor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Patient`
+-- AUTO_INCREMENT for table `patient`
 --
-ALTER TABLE `Patient`
-  MODIFY `PatientId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `patient`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Review`
+-- AUTO_INCREMENT for table `review`
 --
-ALTER TABLE `Review`
-  MODIFY `ReviewId` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `Announcement`
+-- Constraints for table `announcement`
 --
-ALTER TABLE `Announcement`
-  ADD CONSTRAINT `AnnouncementIbfk_1` FOREIGN KEY (`AdminId`) REFERENCES `Admin` (`AdminId`);
+ALTER TABLE `announcement`
+  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);
 
 --
--- Constraints for table `Appointment`
+-- Constraints for table `appointment`
 --
-ALTER TABLE `Appointment`
-  ADD CONSTRAINT `AppointmentIbfk_1` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`PatientId`),
-  ADD CONSTRAINT `AppointmentIbfk_2` FOREIGN KEY (`DoctorId`) REFERENCES `Doctor` (`DoctorId`);
+ALTER TABLE `appointment`
+  ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`),
+  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`);
 
 --
--- Constraints for table `Review`
+-- Constraints for table `review`
 --
-ALTER TABLE `Review`
-  ADD CONSTRAINT `ReviewIbfk_1` FOREIGN KEY (`PatientId`) REFERENCES `Patient` (`PatientId`);
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

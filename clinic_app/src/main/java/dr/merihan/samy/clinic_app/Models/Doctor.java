@@ -10,101 +10,100 @@ import java.util.Objects;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int DoctorId;
-    private String FirstName;
-    private String LastName;
-    private String Email;
-    private String Password;
-    private String Phone;
-
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String phone;
 
     public Doctor() {
     }
 
-    public Doctor(int DoctorId, String FirstName, String LastName, String Email, String Password, String Phone) {
-        this.DoctorId = DoctorId;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Email = Email;
-        this.Password = Password;
-        this.Phone = Phone;
+    public Doctor(int id, String firstName, String lastName, String email, String password, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
     }
 
-    public int getDoctorId() {
-        return this.DoctorId;
+    public int getId() {
+        return this.id;
     }
 
-    public void setDoctorId(int DoctorId) {
-        this.DoctorId = DoctorId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
-        return this.FirstName;
+        return this.firstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return this.LastName;
+        return this.lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
-        return this.Email;
+        return this.email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
-        return this.Password;
+        return this.password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {
-        return this.Phone;
+        return this.phone;
     }
 
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Doctor DoctorId(int DoctorId) {
-        setDoctorId(DoctorId);
+    public Doctor id(int id) {
+        setId(id);
         return this;
     }
 
-    public Doctor FirstName(String FirstName) {
-        setFirstName(FirstName);
+    public Doctor firstName(String firstName) {
+        setFirstName(firstName);
         return this;
     }
 
-    public Doctor LastName(String LastName) {
-        setLastName(LastName);
+    public Doctor lastName(String lastName) {
+        setLastName(lastName);
         return this;
     }
 
-    public Doctor Email(String Email) {
-        setEmail(Email);
+    public Doctor email(String email) {
+        setEmail(email);
         return this;
     }
 
-    public Doctor Password(String Password) {
-        setPassword(Password);
+    public Doctor password(String password) {
+        setPassword(password);
         return this;
     }
 
-    public Doctor Phone(String Phone) {
-        setPhone(Phone);
+    public Doctor phone(String phone) {
+        setPhone(phone);
         return this;
     }
 
@@ -116,27 +115,26 @@ public class Doctor {
             return false;
         }
         Doctor doctor = (Doctor) o;
-        return DoctorId == doctor.DoctorId && Objects.equals(FirstName, doctor.FirstName) && Objects.equals(LastName, doctor.LastName) && Objects.equals(Email, doctor.Email) && Objects.equals(Password, doctor.Password) && Objects.equals(Phone, doctor.Phone);
+        return id == doctor.id && Objects.equals(firstName, doctor.firstName)
+                && Objects.equals(lastName, doctor.lastName) && Objects.equals(email, doctor.email)
+                && Objects.equals(password, doctor.password) && Objects.equals(phone, doctor.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(DoctorId, FirstName, LastName, Email, Password, Phone);
+        return Objects.hash(id, firstName, lastName, email, password, phone);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " DoctorId='" + getDoctorId() + "'" +
-            ", FirstName='" + getFirstName() + "'" +
-            ", LastName='" + getLastName() + "'" +
-            ", Email='" + getEmail() + "'" +
-            ", Password='" + getPassword() + "'" +
-            ", Phone='" + getPhone() + "'" +
-            "}";
+                " id='" + getId() + "'" +
+                ", firstName='" + getFirstName() + "'" +
+                ", lastName='" + getLastName() + "'" +
+                ", email='" + getEmail() + "'" +
+                ", password='" + getPassword() + "'" +
+                ", phone='" + getPhone() + "'" +
+                "}";
     }
 
-    
-
-    
 }

@@ -9,72 +9,72 @@ import jakarta.persistence.*;
 public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int AnnouncementId;
-    private String Message;
-    private Date CreatedAt;
+    private int id;
+    private String message;
+    private Date createdAt;
 
     @OneToOne
-    private Admin Admin;
+    private Admin admin;
 
     public Announcement() {
     }
 
-    public Announcement(int AnnouncementId, String Message, Date CreatedAt, Admin Admin) {
-        this.AnnouncementId = AnnouncementId;
-        this.Message = Message;
-        this.CreatedAt = CreatedAt;
-        this.Admin = Admin;
+    public Announcement(int id, String message, Date createdAt, Admin admin) {
+        this.id = id;
+        this.message = message;
+        this.createdAt = createdAt;
+        this.admin = admin;
     }
 
     public int getAnnouncementId() {
-        return this.AnnouncementId;
+        return this.id;
     }
 
-    public void setAnnouncementId(int AnnouncementId) {
-        this.AnnouncementId = AnnouncementId;
+    public void setAnnouncementId(int id) {
+        this.id = id;
     }
 
     public String getMessage() {
-        return this.Message;
+        return this.message;
     }
 
-    public void setMessage(String Message) {
-        this.Message = Message;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Date getCreatedAt() {
-        return this.CreatedAt;
+        return this.createdAt;
     }
 
-    public void setCreatedAt(Date CreatedAt) {
-        this.CreatedAt = CreatedAt;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Admin getAdmin() {
-        return this.Admin;
+        return this.admin;
     }
 
-    public void setAdmin(Admin Admin) {
-        this.Admin = Admin;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
-    public Announcement AnnouncementId(int AnnouncementId) {
-        setAnnouncementId(AnnouncementId);
+    public Announcement id(int id) {
+        setAnnouncementId(id);
         return this;
     }
 
-    public Announcement Message(String Message) {
-        setMessage(Message);
+    public Announcement message(String message) {
+        setMessage(message);
         return this;
     }
 
-    public Announcement CreatedAt(Date CreatedAt) {
-        setCreatedAt(CreatedAt);
+    public Announcement createdAt(Date createdAt) {
+        setCreatedAt(createdAt);
         return this;
     }
 
-    public Announcement Admin(Admin Admin) {
-        setAdmin(Admin);
+    public Announcement admin(Admin admin) {
+        setAdmin(admin);
         return this;
     }
 
@@ -86,23 +86,23 @@ public class Announcement {
             return false;
         }
         Announcement announcement = (Announcement) o;
-        return AnnouncementId == announcement.AnnouncementId && Objects.equals(Message, announcement.Message) && Objects.equals(CreatedAt, announcement.CreatedAt) && Objects.equals(Admin, announcement.Admin);
+        return id == announcement.id && Objects.equals(message, announcement.message)
+                && Objects.equals(createdAt, announcement.createdAt) && Objects.equals(admin, announcement.admin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(AnnouncementId, Message, CreatedAt, Admin);
+        return Objects.hash(id, message, createdAt, admin);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " AnnouncementId='" + getAnnouncementId() + "'" +
-            ", Message='" + getMessage() + "'" +
-            ", CreatedAt='" + getCreatedAt() + "'" +
-            ", Admin='" + getAdmin() + "'" +
-            "}";
+                " id='" + getAnnouncementId() + "'" +
+                ", message='" + getMessage() + "'" +
+                ", createdAt='" + getCreatedAt() + "'" +
+                ", admin='" + getAdmin() + "'" +
+                "}";
     }
 
-    
 }
