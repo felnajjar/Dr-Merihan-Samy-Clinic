@@ -27,12 +27,6 @@ public class AdminController {
     @Autowired
     private AdminRepository adminRepository;
 
-    @GetMapping("/test")
-    public ModelAndView test() {
-        ModelAndView mav = new ModelAndView("homepage.html");
-        return mav;
-    }
-
     @GetMapping("/addPatient")
     public ModelAndView addPatient() {
         ModelAndView mav = new ModelAndView("");

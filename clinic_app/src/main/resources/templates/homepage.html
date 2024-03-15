@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-  <div th:replace="components/header :: head"></div>
+  <div th:replace="~{components/header :: head}"></div>
   <body>
-    <div th:replace="components/header :: nav"></div>
+    <div th:replace="~{components/header :: nav}"></div>
     <!-- Main content -->
 
 
 
     
     <!------------------>
-    <div th:replace="components/footer :: footer"></div>
+    <div th:replace="~{components/footer :: footer}"></div>
   </body>
 </html>
