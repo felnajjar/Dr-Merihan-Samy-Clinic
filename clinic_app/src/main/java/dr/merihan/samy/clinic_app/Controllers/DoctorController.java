@@ -8,6 +8,7 @@ import dr.merihan.samy.clinic_app.Models.Announcement;
 import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.DoctorRepository;
+import dr.merihan.samy.clinic_app.Services.DoctorService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/doctor")
 public class DoctorController {
 
-    @Autowired
-    private DoctorRepository doctorRepository;
+    private final DoctorService doctorService;
+
+    public DoctorController(DoctorService doctorService){
+        this.doctorService=doctorService;
+    }
    
         @GetMapping("/login")
     public ModelAndView doctorLogin() {
@@ -38,7 +42,7 @@ public class DoctorController {
     @PostMapping("/login")
     public RedirectView loginprocess(@RequestParam("firstname") String firstName, @RequestParam("password") String password,
             HttpSession session) {
-            Doctor dbDoctor = this.doctorRepository.findByfirstName(firstName);
+            Doctor dbDoctor = this.doctorService.getByfirstName(firstName);
              Boolean isPasswordMatched = BCrypt.checkpw(password, dbDoctor.getPassword());
         if (isPasswordMatched) {
             session.setAttribute("userId", dbDoctor.getId());
@@ -57,7 +61,7 @@ public class DoctorController {
     public RedirectView setAnnouncement(@RequestParam("announcement") String announcementContent, HttpSession session) {
         int userId = (int) session.getAttribute("userId");
         if (userId != 0) {
-            Doctor doctor = this.doctorRepository.findById(userId);
+            Doctor doctor = this.doctorService.getByDoctorId(userId);
             if (doctor != null) {
                 Announcement announcement = new Announcement();
                 announcement.message(announcementContent);

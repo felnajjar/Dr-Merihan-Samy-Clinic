@@ -5,7 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
-import dr.merihan.samy.clinic_app.Services.AppointmentServices;
+import dr.merihan.samy.clinic_app.Services.AppointmentService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,44 +17,40 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
-
 @RestController
 @RequestMapping("/appointment")
 public class AppointmentController {
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
 
-    AppointmentServices appointmentServices=new AppointmentServices();
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
+
     @GetMapping("")
     public ModelAndView getAllAppointments() {
-        ModelAndView mav=new ModelAndView();
-        List<Appointment>appointments=this.appointmentRepository.findAll();
+        ModelAndView mav = new ModelAndView();
+        List<Appointment> appointments = this.appointmentService.getAllAppointments();
         mav.addObject("appointments", appointments);
         return mav;
     }
 
     @GetMapping("/bookappointment")
     public ModelAndView bookAppointment() {
-        ModelAndView mav=new ModelAndView();
-        Appointment newaAppointment=new Appointment();
+        ModelAndView mav = new ModelAndView();
+        Appointment newaAppointment = new Appointment();
         mav.addObject("appointment", newaAppointment);
         return mav;
     }
-   
+
     @PostMapping("/bookappointment")
     public String setAppointment(@ModelAttribute Appointment appointment) {
-       
-        boolean isSlotAvailable =appointmentServices.isAppointmentSlotAvailable(appointment.getStartsAt(), appointment.getEndsAt());
+
+        boolean isSlotAvailable = appointmentService.isAppointmentSlotAvailable(appointment);
         if (!isSlotAvailable) {
             return "Appointment slot is already booked. Please choose another slot.";
         }
-        this.appointmentRepository.save(appointment);
+        this.appointmentService.saveAppointment(appointment);
         return "Appointment is set";
     }
 
-
-    
-    
 }
