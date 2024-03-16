@@ -9,6 +9,8 @@ import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
 import dr.merihan.samy.clinic_app.Repository.PatientRepository;
+import dr.merihan.samy.clinic_app.Services.AppointmentService;
+import dr.merihan.samy.clinic_app.Services.PatientService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +29,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
-    @Autowired
-    private PatientRepository patientRepository;
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final PatientService patientService;
+    private final AppointmentService appointmentService;
+
+    public PatientController(PatientService patientService,AppointmentService appointmentService){
+        this.patientService=patientService;
+        this.appointmentService=appointmentService;
+    }
 
     @PostMapping("/registration")
     public String register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
@@ -44,7 +49,7 @@ public class PatientController {
         patient.setPhone(phone);
         String encodedpassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
         patient.setPassword(encodedpassword);
-        this.patientRepository.save(patient);
+        this.patientService.savePatient(patient);
         session.setAttribute("userId", patient.getId());
         session.setAttribute("firstName", patient.getFirstName());
         session.setAttribute("email", patient.getEmail());
@@ -55,7 +60,7 @@ public class PatientController {
     @PostMapping("/login")
     public ModelAndView loginProcess(@RequestParam("email") String email, @RequestParam("password") String password,
             HttpSession session, RedirectAttributes redirectAttributes) {
-        Patient dbPatient = this.patientRepository.findByEmail(email);
+        Patient dbPatient = this.patientService.getByPatientEmail(email);
         if (dbPatient == null) {
             return new ModelAndView("redirect:/#loginFailed");
         }
@@ -79,7 +84,7 @@ public class PatientController {
     @GetMapping("/patient/{patientId}")
     public ModelAndView getAppointmentsByPatientId(@PathVariable int patientId) {
         ModelAndView mav = new ModelAndView();
-        List<Appointment> appointments = this.appointmentRepository.findByPatientId(patientId);
+        List<Appointment> appointments = this.appointmentService.getAppointmentsByPatientId(patientId);
         mav.addObject("appointments", appointments);
         return mav;
     }

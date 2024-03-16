@@ -7,7 +7,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import dr.merihan.samy.clinic_app.Models.Admin;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.AdminRepository;
-
+import dr.merihan.samy.clinic_app.Services.AdminService;
+import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import jakarta.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -24,8 +25,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
-    private AdminRepository adminRepository;
+    private final AdminService adminService;
+
+    
+    public AdminController(AdminService adminService) {
+       this.adminService=adminService;
+    }
+
 
     @GetMapping("/addPatient")
     public ModelAndView addPatient() {
@@ -51,7 +57,7 @@ public class AdminController {
 
     @PostMapping("/addAdmin")
     public String save(@ModelAttribute Admin admin) {
-        this.adminRepository.save(admin);
+        this.adminService.saveAdmin(admin);
         return "Admin added successfully";
     }
 
@@ -80,7 +86,7 @@ public class AdminController {
     @PostMapping("/adminLogin")
     public RedirectView adminLoginProcess(@RequestParam("email") String email,
             @RequestParam("password") String password, HttpSession session) {
-        Admin dbaAdmin = this.adminRepository.findByEmail(email);
+        Admin dbaAdmin = this.adminService.getAdminByEmail(email);
         Boolean isPasswordMatched = BCrypt.checkpw(password, dbaAdmin.getPassword());
         if (isPasswordMatched) {
             session.setAttribute("email", dbaAdmin.getEmail());

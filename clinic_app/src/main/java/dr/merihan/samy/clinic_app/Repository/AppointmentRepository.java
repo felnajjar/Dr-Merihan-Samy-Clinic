@@ -11,8 +11,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     List<Appointment> findByPatientId(int patientId);
 
+    List<Appointment> findByDoctorId(int doctorId);
 
-
+    List<Appointment> findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(int doctorId, Date startsAt1, Date endsAt1, Date startsAt2, Date endsAt2);
    
 
 }
