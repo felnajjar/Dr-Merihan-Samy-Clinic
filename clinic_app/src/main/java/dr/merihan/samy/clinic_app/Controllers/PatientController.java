@@ -34,9 +34,9 @@ public class PatientController {
     private AppointmentRepository appointmentRepository;
 
     @PostMapping("/registration")
-    public String register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+    public ModelAndView register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
             @RequestParam("email") String email, @RequestParam("phone") String phone,
-            @RequestParam("password") String password, HttpSession session) {
+            @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
         Patient patient = new Patient();
         patient.setFirstName(firstName);
         patient.setLastName(lastName);
@@ -49,7 +49,7 @@ public class PatientController {
         session.setAttribute("firstName", patient.getFirstName());
         session.setAttribute("email", patient.getEmail());
 
-        return "Added";
+        return new ModelAndView("redirect:/#loginSuccess");
     }
 
     @PostMapping("/login")
