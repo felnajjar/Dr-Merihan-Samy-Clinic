@@ -37,12 +37,12 @@
               <a class="nav-link" th:classappend="${pageName == 'Services'} ? 'active' : ''" href="/services">Services</a>
             </li>
             <li class="nav-item">
-              <a th:if="${email == null}" class="nav-link" th:classappend="${pageName == 'Announcements'} ? 'active' : ''" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Announcements</a>
+              <a th:if="${email == null}" class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Announcements</a>
               <a th:if="${email}" class="nav-link" th:classappend="${pageName == 'Announcements'} ? 'active' : ''" href="#">Announcements</a>
             </li>  
             <li class="nav-item">
-              <a th:if="${email == null}" class="nav-link" th:classappend="${pageName == 'Book'} ? 'active' : ''" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Book an appointment</a>
-              <a th:if="${email}" class="nav-link" th:classappend="${pageName == 'Book'} ? 'active' : ''" href="#">Book an appointment</a>
+              <a th:if="${email == null}" class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Book an appointment</a>
+              <a th:if="${email}" class="nav-link" th:classappend="${pageName == 'Book Appointment'} ? 'active' : ''" href="/patient/book">Book an appointment</a>
             </li>
           </ul>
           <a th:if="${firstName}" class="nav-link me-3 no-hover">Welcome, <span th:text="${firstName}"></span>!</a>

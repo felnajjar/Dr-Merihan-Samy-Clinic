@@ -89,4 +89,16 @@ public class PatientController {
         return mav;
     }
 
+    @GetMapping("/book")
+    public ModelAndView bookAppointment(HttpSession session) {
+        Appointment appointment = new Appointment();
+        ModelAndView mav = new ModelAndView("bookAppointment.html");
+        mav.addObject("pageName", "Book Appointment");
+        mav.addObject("firstName", session.getAttribute("firstName"));
+        mav.addObject("email", session.getAttribute("email"));
+        mav.addObject("userId", session.getAttribute("userId"));
+        mav.addObject("appointment", appointment);
+        return mav;
+    }
+
 }

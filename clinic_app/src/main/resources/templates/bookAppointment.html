@@ -10,24 +10,16 @@
     <h1 class="mb-4">Book an Appointment</h1>
     <div class="row">
         <div class="col-md-6">
-            <form>
-                <div class="mb-3">
-                    <label for="fullName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
-                </div>
-                <div class="mb-3">
-                    <label for="appointmentDate" class="form-label">Appointment Date</label>
-                    <input type="date" class="form-control" id="appointmentDate">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <form action="/patient/book" method="post">
+              <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date and Time</label>
+                <input type="datetime-local" class="form-control" id="startDate" step="1800">
+              </div>
+              <div class="mb-3">
+                <label for="endDate" class="form-label">End Date and Time</label>
+                <input type="datetime-local" class="form-control" id="endDate" step="1800">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
