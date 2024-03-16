@@ -3,7 +3,7 @@ package dr.merihan.samy.clinic_app.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dr.merihan.samy.clinic_app.Models.Admin;
+
 import dr.merihan.samy.clinic_app.Repository.AdminRepository;
 
 //nos elbeta3a de fadya 3shan ana bal3ab lesa 

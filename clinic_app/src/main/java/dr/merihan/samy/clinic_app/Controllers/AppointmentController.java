@@ -5,6 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
+import dr.merihan.samy.clinic_app.Services.AppointmentServices;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AppointmentController {
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    AppointmentServices appointmentServices=new AppointmentServices();
     @GetMapping("")
     public ModelAndView getAllAppointments() {
         ModelAndView mav=new ModelAndView();
@@ -42,7 +45,8 @@ public class AppointmentController {
    
     @PostMapping("/bookappointment")
     public String setAppointment(@ModelAttribute Appointment appointment) {
-        boolean isSlotAvailable = appointmentRepository.isAppointmentSlotAvailable(appointment.getStartsAt(), appointment.getEndsAt());
+       
+        boolean isSlotAvailable =appointmentServices.isAppointmentSlotAvailable(appointment.getStartsAt(), appointment.getEndsAt());
         if (!isSlotAvailable) {
             return "Appointment slot is already booked. Please choose another slot.";
         }

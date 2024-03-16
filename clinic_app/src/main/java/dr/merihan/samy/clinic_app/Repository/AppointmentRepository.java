@@ -11,7 +11,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     List<Appointment> findByPatientId(int patientId);
 
-    boolean isAppointmentSlotAvailable(Date startsAt, Date endsAt);
+
 
    
 

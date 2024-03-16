@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./../style.css" />
   </head>
   <body>
-    <!-- Universal navbar -->
+    <!-- Universal navbar -->    
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container">
         <a class="navbar-brand" href="#">Dr. Merihan Samy</a>
@@ -37,13 +37,16 @@
               <a class="nav-link" href="#">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Announcements</a>
+              <a th:if="${email == null}" class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Announcements</a>
+              <a th:if="${email}" class="nav-link" href="#">Announcements</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Book an appointment</a>
+              <a th:if="${email == null}"class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Book an appointment</a>
+              <a th:if="${email}"class="nav-link" href="#">Book an appointment</a>
             </li>
           </ul>
-          <button
+          <a href="/patient/logout" th:if="${email}" class="btn btn-outline-primary">Logout</a>
+          <button th:if="${email == null}"
             class="btn btn-outline-primary"
             style="margin-right: 5px"
             data-bs-toggle="modal"
@@ -51,7 +54,7 @@
           >
             Sign In
           </button>
-          <button
+          <button th:if="${email == null}"
             class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#registerModal"
@@ -69,15 +72,15 @@
               <h5 class="modal-title" id="signInModalLabel">Sign In</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
+            <form id="signInForm" action="/patient/login" method="post">
               <div class="modal-body">
                 <p>Welcome back! Please enter your login details to continue.</p>
                 <!-- Sign-in form -->
                 <div class="form-group mb-3">
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email address">
+                  <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email address">
                 </div>
                 <div class="form-group mb-3">
-                  <input type="password" class="form-control" id="password" placeholder="Password">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
               </div>
               <div class="modal-footer">
@@ -95,7 +98,7 @@
               <h5 class="modal-title" id="registerModalLabel">Register</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form>
+            <form id="registerForm" action="/patient/registration" method="post">
               <div class="modal-body">
                 <p>
                   Please fill in the form below to register. All fields are required.
@@ -103,20 +106,20 @@
                 <!-- Registration form -->
                 <div class="form-row mb-3">
                   <div class="form-group col-md-5 mb-3" style="float:left">
-                    <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
                   </div>
                   <div class="form-group col-md-6 mb-3" style="float:right">
-                    <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
                   </div>
                 </div>
                 <div class="form-group mb-3">
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group mb-3">
-                  <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number">
                 </div>
                 <div class="form-group mb-3">
-                  <input type="password" class="form-control" id="password" placeholder="Password">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
               </div>
               <div class="modal-footer">
