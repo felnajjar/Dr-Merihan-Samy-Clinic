@@ -53,20 +53,20 @@ public class PatientController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginProcess(@RequestParam("email") String email, @RequestParam("password") String password,
+    public ModelAndView loginProcess(@RequestParam("email") String email, @RequestParam("password") String password,
             HttpSession session, RedirectAttributes redirectAttributes) {
         Patient dbPatient = this.patientRepository.findByEmail(email);
         if (dbPatient == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email does not exist");
+            return new ModelAndView("redirect:/#loginFailed");
         }
         Boolean isPasswordMatched = BCrypt.checkpw(password, dbPatient.getPassword());
         if (isPasswordMatched) {
             session.setAttribute("userId", dbPatient.getId());
             session.setAttribute("firstName", dbPatient.getFirstName());
             session.setAttribute("email", dbPatient.getEmail());
-            return ResponseEntity.status(HttpStatus.OK).body("Login successful");
+            return new ModelAndView("redirect:/");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+            return new ModelAndView("redirect:/#loginFailed");
         }
     }
 
@@ -75,7 +75,6 @@ public class PatientController {
         session.invalidate();
         return new RedirectView("/");
     }
-    
 
     @GetMapping("/patient/{patientId}")
     public ModelAndView getAppointmentsByPatientId(@PathVariable int patientId) {

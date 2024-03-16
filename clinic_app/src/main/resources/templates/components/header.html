@@ -64,6 +64,17 @@
         </div>
       </div>
       
+      <!-- Toasts -->
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="loginFailed" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              <strong>Invalid login details!</strong> Please try again.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
       <!-- Sign in Modal -->
       <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -77,10 +88,10 @@
                 <p>Welcome back! Please enter your login details to continue.</p>
                 <!-- Sign-in form -->
                 <div class="form-group mb-3">
-                  <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email address">
+                  <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Email address">
                 </div>
                 <div class="form-group mb-3">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
               </div>
               <div class="modal-footer">
@@ -106,20 +117,20 @@
                 <!-- Registration form -->
                 <div class="form-row mb-3">
                   <div class="form-group col-md-5 mb-3" style="float:left">
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+                    <input type="text" class="form-control" name="firstName" placeholder="First Name">
                   </div>
                   <div class="form-group col-md-6 mb-3" style="float:right">
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last Name">
                   </div>
                 </div>
                 <div class="form-group mb-3">
-                  <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Email">
                 </div>
                 <div class="form-group mb-3">
-                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number">
+                  <input type="tel" class="form-control" name="phone" placeholder="Phone number">
                 </div>
                 <div class="form-group mb-3">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                  <input type="password" class="form-control"  name="password" placeholder="Password">
                 </div>
               </div>
               <div class="modal-footer">
