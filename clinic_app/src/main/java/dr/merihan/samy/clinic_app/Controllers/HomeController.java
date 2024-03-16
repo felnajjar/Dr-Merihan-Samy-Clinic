@@ -15,6 +15,17 @@ public class HomeController {
     @GetMapping("")
     public ModelAndView home(HttpSession session) {
         ModelAndView mav = new ModelAndView("homepage.html");
+        mav.addObject("pageName", "Home");
+        mav.addObject("firstName", session.getAttribute("firstName"));
+        mav.addObject("email", session.getAttribute("email"));
+        mav.addObject("userId", session.getAttribute("userId"));
+        return mav;
+    }
+
+    @GetMapping("/services")
+    public ModelAndView services(HttpSession session) {
+        ModelAndView mav = new ModelAndView("services.html");
+        mav.addObject("pageName", "Services");
         mav.addObject("firstName", session.getAttribute("firstName"));
         mav.addObject("email", session.getAttribute("email"));
         mav.addObject("userId", session.getAttribute("userId"));
