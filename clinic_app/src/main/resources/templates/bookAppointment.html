@@ -10,21 +10,21 @@
     <h1 class="mb-4">Book an Appointment</h1>
     <div class="row">
         <div class="col-md-6">
-            <form action="/patient/book" method="post">
+            <form action="/patient/book" method="post" th:object="${appointment}">
               <div class="mb-3">
-                <label for="startDate" class="form-label">Start Date and Time</label>
-                <input type="datetime-local" class="form-control" id="startDate" step="1800">
+                <label for="startsAt" class="form-label">Start Date and Time</label>
+                <input type="datetime-local" class="form-control" id="startsAt" step="1800" th:field="*{startsAt}" required>
               </div>
               <div class="mb-3">
-                <label for="endDate" class="form-label">End Date and Time</label>
-                <input type="datetime-local" class="form-control" id="endDate" step="1800">
+                <label for="endsAt" class="form-label">End Date and Time</label>
+                <input type="datetime-local" class="form-control" id="endsAt" step="1800" th:field="*{endsAt}" required>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
   </div>
-
+  <br><br>
   <!------------------>
   <div th:replace="~{components/footer :: footer}"></div>
 </body>
