@@ -64,7 +64,7 @@ public class PatientController {
             session.setAttribute("userId", dbPatient.getId());
             session.setAttribute("firstName", dbPatient.getFirstName());
             session.setAttribute("email", dbPatient.getEmail());
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/#loginSuccess");
         } else {
             return new ModelAndView("redirect:/#loginFailed");
         }
