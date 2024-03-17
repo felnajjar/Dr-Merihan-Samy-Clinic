@@ -1,6 +1,6 @@
 package dr.merihan.samy.clinic_app.Models;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String message;
-    private Date createdAt;
+    private Timestamp createdAt;
 
     @OneToOne
     private Admin admin;
@@ -19,7 +19,7 @@ public class Announcement {
     public Announcement() {
     }
 
-    public Announcement(int id, String message, Date createdAt, Admin admin) {
+    public Announcement(int id, String message, Timestamp createdAt, Admin admin) {
         this.id = id;
         this.message = message;
         this.createdAt = createdAt;
@@ -42,11 +42,11 @@ public class Announcement {
         this.message = message;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -68,7 +68,7 @@ public class Announcement {
         return this;
     }
 
-    public Announcement createdAt(Date createdAt) {
+    public Announcement createdAt(Timestamp createdAt) {
         setCreatedAt(createdAt);
         return this;
     }

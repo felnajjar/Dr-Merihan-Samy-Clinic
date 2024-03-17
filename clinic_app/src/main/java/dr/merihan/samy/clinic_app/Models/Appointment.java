@@ -1,6 +1,7 @@
 package dr.merihan.samy.clinic_app.Models;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +16,8 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Date startsAt;
-    private Date endsAt;
+    private Timestamp startsAt;
+    private Timestamp endsAt;
     @ManyToOne
     private Doctor doctor;
 
@@ -26,7 +27,7 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(int id, Date startsAt, Date endsAt, Doctor doctor, Patient patient) {
+    public Appointment(int id, Timestamp startsAt, Timestamp endsAt, Doctor doctor, Patient patient) {
         this.id = id;
         this.startsAt = startsAt;
         this.endsAt = endsAt;
@@ -42,19 +43,19 @@ public class Appointment {
         this.id = id;
     }
 
-    public Date getStartsAt() {
+    public Timestamp getStartsAt() {
         return this.startsAt;
     }
 
-    public void setStartsAt(Date startsAt) {
+    public void setStartsAt(Timestamp startsAt) {
         this.startsAt = startsAt;
     }
 
-    public Date getEndsAt() {
+    public Timestamp getEndsAt() {
         return this.endsAt;
     }
 
-    public void setEndsAt(Date endsAt) {
+    public void setEndsAt(Timestamp endsAt) {
         this.endsAt = endsAt;
     }
 
@@ -79,12 +80,12 @@ public class Appointment {
         return this;
     }
 
-    public Appointment startsAt(Date startsAt) {
+    public Appointment startsAt(Timestamp startsAt) {
         setStartsAt(startsAt);
         return this;
     }
 
-    public Appointment endsAt(Date endsAt) {
+    public Appointment endsAt(Timestamp endsAt) {
         setEndsAt(endsAt);
         return this;
     }

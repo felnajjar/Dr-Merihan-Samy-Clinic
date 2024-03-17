@@ -1,6 +1,6 @@
 package dr.merihan.samy.clinic_app.Services;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +38,8 @@ public class AppointmentService {
 
         public boolean isAppointmentSlotAvailable(Appointment appointment) {
             Doctor doctor = appointment.getDoctor();
-            Date startsAt = appointment.getStartsAt();
-            Date endsAt = appointment.getEndsAt();
+            Timestamp startsAt = appointment.getStartsAt();
+            Timestamp endsAt = appointment.getEndsAt();
         List<Appointment> overlappingAppointments = appointmentRepository.findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(doctor.getId(), startsAt, endsAt, startsAt, endsAt);
         return overlappingAppointments.isEmpty();
     }

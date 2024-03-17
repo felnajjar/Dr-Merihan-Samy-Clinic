@@ -6,15 +6,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import dr.merihan.samy.clinic_app.Models.Appointment;
+import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
 import dr.merihan.samy.clinic_app.Repository.PatientRepository;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
+import dr.merihan.samy.clinic_app.Services.DoctorService;
 import dr.merihan.samy.clinic_app.Services.PatientService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -32,10 +37,13 @@ public class PatientController {
 
     private final PatientService patientService;
     private final AppointmentService appointmentService;
+    private final DoctorService doctorService;
 
-    public PatientController(PatientService patientService,AppointmentService appointmentService){
-        this.patientService=patientService;
-        this.appointmentService=appointmentService;
+    public PatientController(PatientService patientService, AppointmentService appointmentService,
+            DoctorService doctorService) {
+        this.patientService = patientService;
+        this.appointmentService = appointmentService;
+        this.doctorService = doctorService;
     }
 
     @PostMapping("/registration")
@@ -91,8 +99,20 @@ public class PatientController {
 
     @GetMapping("/book")
     public ModelAndView bookAppointment(HttpSession session) {
-        Appointment appointment = new Appointment();
         ModelAndView mav = new ModelAndView("bookAppointment.html");
+
+        Appointment appointment = new Appointment();
+        LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime roundedTime = now.truncatedTo(ChronoUnit.HOURS)
+                .plusMinutes((now.getMinute() / 30) * 30).plusMinutes(30);
+
+        appointment.setStartsAt(Timestamp.valueOf(roundedTime));
+        appointment.setEndsAt(Timestamp.valueOf(roundedTime.plusMinutes(30)));
+
+        List<Doctor> doctors = this.doctorService.getAllDoctors();
+        mav.addObject("doctors", doctors);
+        
         mav.addObject("pageName", "Book Appointment");
         mav.addObject("firstName", session.getAttribute("firstName"));
         mav.addObject("email", session.getAttribute("email"));

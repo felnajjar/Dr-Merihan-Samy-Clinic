@@ -1,5 +1,7 @@
 package dr.merihan.samy.clinic_app.Services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,10 @@ public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
-    public Doctor getByfirstName(String firstname){
+    public List<Doctor> getAllDoctors(){
+        return doctorRepository.findAll();
+    }
+    public Doctor getByFirstName(String firstname){
         return doctorRepository.findByfirstName(firstname);
     }
     public Doctor getByDoctorId(int id){

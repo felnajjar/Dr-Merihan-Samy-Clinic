@@ -42,7 +42,7 @@ public class DoctorController {
     @PostMapping("/login")
     public RedirectView loginprocess(@RequestParam("firstname") String firstName, @RequestParam("password") String password,
             HttpSession session) {
-            Doctor dbDoctor = this.doctorService.getByfirstName(firstName);
+            Doctor dbDoctor = this.doctorService.getByFirstName(firstName);
              Boolean isPasswordMatched = BCrypt.checkpw(password, dbDoctor.getPassword());
         if (isPasswordMatched) {
             session.setAttribute("userId", dbDoctor.getId());

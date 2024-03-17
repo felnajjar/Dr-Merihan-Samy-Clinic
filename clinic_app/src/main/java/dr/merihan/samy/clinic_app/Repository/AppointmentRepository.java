@@ -1,6 +1,6 @@
 package dr.merihan.samy.clinic_app.Repository;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     List<Appointment> findByDoctorId(int doctorId);
 
-    List<Appointment> findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(int doctorId, Date startsAt1, Date endsAt1, Date startsAt2, Date endsAt2);
+    List<Appointment> findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(int doctorId, Timestamp startsAt1, Timestamp endsAt1, Timestamp startsAt2, Timestamp endsAt2);
    
 
 }

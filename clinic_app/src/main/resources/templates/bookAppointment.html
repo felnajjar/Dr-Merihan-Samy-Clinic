@@ -12,11 +12,18 @@
         <div class="col-md-6">
             <form action="/patient/book" method="post" th:object="${appointment}">
               <div class="mb-3">
-                <label for="startsAt" class="form-label">Start Date and Time</label>
-                <input type="datetime-local" class="form-control" id="startsAt" step="1800" th:field="*{startsAt}" required>
+                <label for="doctor" class="form-label">Doctor</label>
+                <select class="form-select" id="doctor" th:field="*{doctor}" required>
+                  <option value="" hidden>Select a doctor...</option>
+                  <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.firstName} + ' ' + ${doctor.lastName}"></option>
+                </select>
               </div>
               <div class="mb-3">
-                <label for="endsAt" class="form-label">End Date and Time</label>
+                <label for="startsAt" class="form-label">Starting Date & Time</label>
+                <input type="datetime-local" class="form-control" id="startsAt" step="1800" th:field="*{startsAt}" required> 
+              </div>
+              <div class="mb-3">
+                <label for="endsAt" class="form-label">Ending Date & Time</label>
                 <input type="datetime-local" class="form-control" id="endsAt" step="1800" th:field="*{endsAt}" required>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
