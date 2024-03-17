@@ -38,7 +38,7 @@ public class AdminController {
         this.patientService = patientService;
         this.doctorService = doctorService;
     }
-    
+
     @GetMapping("/")
     public ModelAndView homepage() {
         return new ModelAndView("redirect:/admin/patients");
@@ -95,15 +95,23 @@ public class AdminController {
     }
 
     @PostMapping("/editPatient")
-    public ModelAndView editPatient(@ModelAttribute Patient patient) {
-        patientService.savePatient(patient);
-        return new ModelAndView("redirect:/admin/patients");
+    public ModelAndView editPatient(@RequestParam("id") String id, @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("email") String email, @RequestParam("phone") String phone, HttpSession session,
+            RedirectAttributes redirectAttributes) {
+        Patient patient = patientService.getPatientById(Integer.parseInt(id));
+        patient.setFirstName(firstName);
+        patient.setLastName(lastName);
+        patient.setEmail(email);
+        patient.setPhone(phone);
+        this.patientService.savePatient(patient);
+        return new ModelAndView("redirect:/admin/patients#updated");
     }
 
     @GetMapping("/deletePatient/{id}")
     public ModelAndView deletePatient(@PathVariable int id) {
         patientService.deletePatient(id);
-        return new ModelAndView("redirect:/admin/patients");
+        return new ModelAndView("redirect:/admin/patients#deleted");
     }
 
     // Doctor CRUD
@@ -122,10 +130,11 @@ public class AdminController {
     }
 
     @PostMapping("/addDoctor")
-    public ModelAndView saveDoctor(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
-    @RequestParam("email") String email, @RequestParam("phone") String phone,
-    @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
-        Doctor doctor=new Doctor();
+    public ModelAndView saveDoctor(@RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("email") String email, @RequestParam("phone") String phone,
+            @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
+        Doctor doctor = new Doctor();
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);
         doctor.setEmail(email);
@@ -133,31 +142,27 @@ public class AdminController {
         String encodedpassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
         doctor.setPassword(encodedpassword);
         this.doctorService.SaveDoctor(doctor);
-        session.setAttribute("userId", doctor.getId());
-        session.setAttribute("firstName", doctor.getFirstName());
-        session.setAttribute("email", doctor.getEmail());
-
-        return new ModelAndView("redirect:/admin/doctors");
-    }
-
-    @GetMapping("/editDoctor/{id}")
-    public ModelAndView editDoctorForm(@PathVariable int id) {
-        ModelAndView mav = new ModelAndView("");
-        Doctor doctor = doctorService.getByDoctorId(id);
-        mav.addObject("doctor", doctor);
-        return mav;
+        return new ModelAndView("redirect:/admin/doctors#added");
     }
 
     @PostMapping("/editDoctor")
-    public String editDoctor(@ModelAttribute Doctor doctor) {
-        doctorService.SaveDoctor(doctor);
-        return "Patient Updated";
+    public ModelAndView editDoctor(@RequestParam("id") String id, @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("email") String email, @RequestParam("phone") String phone, HttpSession session,
+            RedirectAttributes redirectAttributes) {
+        Doctor doctor = doctorService.getByDoctorId(Integer.parseInt(id));
+        doctor.setFirstName(firstName);
+        doctor.setLastName(lastName);
+        doctor.setEmail(email);
+        doctor.setPhone(phone);
+        this.doctorService.SaveDoctor(doctor);
+        return new ModelAndView("redirect:/admin/doctors#updated");
     }
 
     @GetMapping("/deleteDoctor/{id}")
-    public String deleteDoctor(@PathVariable int id) {
+    public ModelAndView deleteDoctor(@PathVariable int id) {
         doctorService.deleteDoctor(id);
-        return "deleted";
+        return new ModelAndView("redirect:/admin/doctors#deleted");
     }
 
 }
