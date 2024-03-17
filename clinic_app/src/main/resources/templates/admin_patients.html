@@ -33,6 +33,9 @@
                 <a th:href="@{'/admin/deletePatient/' + ${patient.id}}" class="btn btn-danger btn-sm">Delete</a>
               </td>
             </tr>
+            <tr th:if="${patients.size() == 0}">
+              <td colspan="6">No patients</td>
+            </tr>
           </tbody>
         </table>
       </div>
