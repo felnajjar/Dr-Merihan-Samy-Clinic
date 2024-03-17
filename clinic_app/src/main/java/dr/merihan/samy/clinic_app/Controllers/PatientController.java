@@ -60,8 +60,8 @@ public class PatientController {
         String encodedpassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
         patient.setPassword(encodedpassword);
         this.patientService.savePatient(patient);
-        session.setAttribute("userId", patient.getId());
-        session.setAttribute("firstName", patient.getFirstName());
+        session.setAttribute("user_id", patient.getId());
+        session.setAttribute("first_name", patient.getFirstName());
         session.setAttribute("email", patient.getEmail());
 
         return new ModelAndView("redirect:/#loginSuccess");
@@ -76,8 +76,8 @@ public class PatientController {
         }
         Boolean isPasswordMatched = BCrypt.checkpw(password, dbPatient.getPassword());
         if (isPasswordMatched) {
-            session.setAttribute("userId", dbPatient.getId());
-            session.setAttribute("firstName", dbPatient.getFirstName());
+            session.setAttribute("user_id", dbPatient.getId());
+            session.setAttribute("first_name", dbPatient.getFirstName());
             session.setAttribute("email", dbPatient.getEmail());
             return new ModelAndView("redirect:/#loginSuccess");
         } else {
@@ -114,21 +114,45 @@ public class PatientController {
 
         List<Doctor> doctors = this.doctorService.getAllDoctors();
         mav.addObject("doctors", doctors);
-        
+
         mav.addObject("page_name", "Book Appointment");
-        mav.addObject("firstName", session.getAttribute("firstName"));
+        mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
-        mav.addObject("userId", session.getAttribute("userId"));
         mav.addObject("appointment", appointment);
         return mav;
     }
 
-    
+    @GetMapping("/announcements")
+    public ModelAndView getAnnouncements(HttpSession session) {
+        ModelAndView mav = new ModelAndView("patient_announcements.html");
+        if (session.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/patient/login");
+        }
+        mav.addObject("first_name", session.getAttribute("first_name"));
+        mav.addObject("email", session.getAttribute("email"));
+        mav.addObject("page_name", "Announcements");
+        return mav;
+    }
+
+    @GetMapping("/appointments")
+    public ModelAndView getAppointments(HttpSession session) {
+        ModelAndView mav = new ModelAndView("patient_appointments.html");
+        if (session.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/patient/login");
+        }
+        mav.addObject("first_name", session.getAttribute("first_name"));
+        mav.addObject("email", session.getAttribute("email"));
+        mav.addObject("page_name", "Appointments");
+        return mav;
+    }
+
     @PostMapping("/book")
-    public String setAppointment(@RequestParam("startsAt") String startsAt,@RequestParam("endsAt") String endsAt,@ModelAttribute Doctor doctor,HttpSession session) {
+    public ModelAndView setAppointment(@RequestParam("startsAt") String startsAt, @RequestParam("endsAt") String endsAt,
+            @ModelAttribute Doctor doctor, HttpSession session) {
         Appointment appointment = new Appointment();
-        Timestamp startsAtDate= Timestamp.valueOf(LocalDateTime.parse(startsAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        Timestamp endsAtDate= Timestamp.valueOf(LocalDateTime.parse(endsAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        Timestamp startsAtDate = Timestamp
+                .valueOf(LocalDateTime.parse(startsAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        Timestamp endsAtDate = Timestamp.valueOf(LocalDateTime.parse(endsAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         appointment.setStartsAt(startsAtDate);
         appointment.setEndsAt(endsAtDate);
         appointment.setDoctor(doctor);
@@ -136,10 +160,10 @@ public class PatientController {
         appointment.setPatient(patient);
         boolean isSlotAvailable = appointmentService.isAppointmentSlotAvailable(appointment);
         if (!isSlotAvailable) {
-            return "Appointment slot is already booked. Please choose another slot.";
+            return new ModelAndView("redirect:/patient/book#slotNotAvailable");
         }
         this.appointmentService.saveAppointment(appointment);
-        return "Appointment is set";
+        return new ModelAndView("redirect:/patient/appointments");
     }
 
 }

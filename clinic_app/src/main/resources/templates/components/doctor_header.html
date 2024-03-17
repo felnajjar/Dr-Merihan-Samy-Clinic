@@ -37,6 +37,7 @@
               <a class="nav-link" th:classappend="${page_name == 'Announcements'} ? 'active' : ''" href="/doctor/announcements">Announcements</a>
             </li>
           </ul>
+          <a th:if="${doctor_name}" class="nav-link me-3 no-hover"><span th:text="${doctor_name}"></span></a>
           <a href="/doctor/logout" th:if="${doctor_email}" class="btn btn-outline-primary">Logout</a>
         </div>
       </div>
