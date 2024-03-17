@@ -142,7 +142,7 @@ public class PatientController {
         }
         mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
-        mav.addObject("page_name", "Appointments");
+        mav.addObject("page_name", "My Appointments");
         return mav;
     }
 

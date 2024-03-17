@@ -16,7 +16,7 @@ public class HomeController {
     public ModelAndView home(HttpSession session) {
         ModelAndView mav = new ModelAndView("patient_homepage.html");
         mav.addObject("page_name", "Home");
-        mav.addObject("first_name", session.getAttribute("firstName"));
+        mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
         return mav;
     }
@@ -25,7 +25,7 @@ public class HomeController {
     public ModelAndView services(HttpSession session) {
         ModelAndView mav = new ModelAndView("patient_services.html");
         mav.addObject("page_name", "Services");
-        mav.addObject("first_name", session.getAttribute("firstName"));
+        mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
         return mav;
     }
