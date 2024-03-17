@@ -35,7 +35,7 @@
               <td th:text="${doctor.email}"></td>
               <td th:text="${doctor.phone}"></td>
               <td>
-                <a th:href="@{'/admin/doctor/' + ${doctor.id} + '/edit'}" class="btn btn-warning btn-sm">Edit</a>
+                <a data-bs-toggle="modal" th:data-bs-target="'#editDoctorModal' + ${doctor.id}" class="btn btn-warning btn-sm">Edit</a>
                 <a th:href="@{'/admin/deleteDoctor/' + ${doctor.id}}" class="btn btn-danger btn-sm">Delete</a>
               </td>
             </tr>
@@ -83,7 +83,80 @@
         </div>
       </div>
     </div>
-    
+
+    <!-- Edit Doctor Modal -->
+    <div th:each="doctor : ${doctors}">
+      <div class="modal fade" th:id="'editDoctorModal' + ${doctor.id}" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addDoctorModalLabel">Edit Doctor</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editDoctorForm" action="/admin/editDoctor" method="post">
+              <div class="modal-body">
+                <p>
+                  Edit the doctor's details below.
+                </p>
+                <!-- Edit Doctor form -->
+                <div class="form-group mb-3 hidden">
+                  <input type="text" class="form-control" name="id" placeholder="Doctor ID" th:value="${doctor.id}" hidden required>
+                </div>
+                <div class="form-row mb-3">
+                  <div class="form-group col-md-5 mb-3" style="float:left">
+                    <input type="text" class="form-control" name="firstName" placeholder="First Name" th:value="${doctor.firstName}" required>
+                  </div>
+                  <div class="form-group col-md-6 mb-3" style="float:right">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last Name" th:value="${doctor.lastName}" required> 
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Email" th:value="${doctor.email}" required>
+                </div>
+                <div class="form-group mb-3">
+                  <input type="tel" class="form-control" name="phone" placeholder="Phone number" th:value="${doctor.phone}" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Edit Doctor</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- Toasts -->
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Doctor added successfully
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="updated" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Doctor updated successfully
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="deleted" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Doctor deleted
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
     <!------------------>
     <div th:replace="~{components/admin_footer :: footer}"></div>
   </body>

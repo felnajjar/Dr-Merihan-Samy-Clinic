@@ -15,7 +15,7 @@
     <!-- Universal navbar -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
       <div class="container">
-        <a class="navbar-brand" href="/admin/">Clinic Admin</a>
+        <a class="navbar-brand" href="/admin/">Admin</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -29,9 +29,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" th:classappend="${page_name == 'Dashboard'} ? 'active' : ''" href="/admin/">Dashboard</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" th:classappend="${page_name == 'Patients'} ? 'active' : ''" href="/admin/patients">Patients</a>
             </li>

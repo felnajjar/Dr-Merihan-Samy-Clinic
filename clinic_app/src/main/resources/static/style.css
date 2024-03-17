@@ -1,8 +1,8 @@
 /* Global styles */
 
 .nav-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.6em;
+  text-decoration: underline;
+  text-underline-offset: 0.6em;
 }
 
 .active {
@@ -13,4 +13,15 @@
 
 .no-hover:hover {
   text-decoration: none;
+}
+
+i {
+  font-size: 1.25em;
+  padding: 0 0.25em;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

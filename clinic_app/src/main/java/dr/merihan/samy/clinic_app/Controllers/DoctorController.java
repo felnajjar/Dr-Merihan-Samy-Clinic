@@ -60,6 +60,7 @@ public class DoctorController {
         Boolean isPasswordMatched = BCrypt.checkpw(password, dbDoctor.getPassword());
         if (isPasswordMatched) {
             session.setAttribute("doctor_email", dbDoctor.getEmail());
+            session.setAttribute("doctor_name", "Dr. " + dbDoctor.getFirstName() + " " + dbDoctor.getLastName());
             return new RedirectView("/doctor/appointments");
         } else {
             return new RedirectView("/doctor/login#loginFailed");
@@ -75,6 +76,7 @@ public class DoctorController {
         Doctor doctor=new Doctor();
         List<Appointment> appointments=this.appointmentService.getAppointmentsByDoctorId(doctor.getId());
         mav.addObject("doctor_email", session.getAttribute("doctor_email"));
+        mav.addObject("doctor_name", session.getAttribute("doctor_name"));
         mav.addObject("page_name", "Appointments");
         mav.addObject("appointments", appointments);
         return mav;
@@ -87,6 +89,7 @@ public class DoctorController {
             return new ModelAndView("redirect:/doctor/login");
         }
         mav.addObject("doctor_email", session.getAttribute("doctor_email"));
+        mav.addObject("doctor_name", session.getAttribute("doctor_name"));
         mav.addObject("page_name", "Announcements");
         Doctor doctor=new Doctor();
         List<Announcement> announcements=this.announcementService.getByDoctorId(doctor.getId());
@@ -112,6 +115,12 @@ public class DoctorController {
             }
         }
         return new RedirectView("");
+    }
+
+    @GetMapping("/logout")
+    public RedirectView logout(HttpSession session) {
+        session.invalidate();
+        return new RedirectView("/doctor/");
     }
 
 }
