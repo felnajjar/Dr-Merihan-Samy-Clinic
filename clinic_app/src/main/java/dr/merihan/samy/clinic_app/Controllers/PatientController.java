@@ -182,6 +182,18 @@ public class PatientController {
         if (!isSlotAvailable) {
             return new ModelAndView("redirect:/patient/book#slotNotAvailable");
         }
+        if (startsAtDate.before(Timestamp.valueOf(LocalDateTime.now()))) {
+            return new ModelAndView("redirect:/patient/book#invalidDate");
+        }
+        if (startsAtDate.after(endsAtDate)) {
+            return new ModelAndView("redirect:/patient/book#invalidDate");
+        }
+        if (startsAtDate.toLocalDateTime().until(endsAtDate.toLocalDateTime(), ChronoUnit.MINUTES) > 120) {
+            return new ModelAndView("redirect:/patient/book#invalidDuration");
+        }
+        if (startsAtDate.toLocalDateTime().until(endsAtDate.toLocalDateTime(), ChronoUnit.MINUTES) < 30) {
+            return new ModelAndView("redirect:/patient/book#invalidDuration");
+        }
         this.appointmentService.saveAppointment(appointment);
         return new ModelAndView("redirect:/patient/appointments#bookSuccess");
     }

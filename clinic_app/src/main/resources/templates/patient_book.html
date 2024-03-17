@@ -44,6 +44,26 @@
       </div>
     </div>  
   </div>
+  <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+    <div id="invalidDate" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Invalid date. Please select a valid date.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>  
+  </div>
+  <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+    <div id="invalidDuration" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Duration should be at least 30 minutes and at most 2 hours.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>  
+  </div>
   <!------------------>
   <div th:replace="~{components/patient_footer :: footer}"></div>
 </body>

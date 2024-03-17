@@ -3,6 +3,7 @@ package dr.merihan.samy.clinic_app.Services;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ public class AppointmentService {
         Timestamp endsAt = appointment.getEndsAt();
         List<Appointment> overlappingAppointments = appointmentRepository
                 .findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(doctor.getId(), startsAt, endsAt, startsAt, endsAt);
+        overlappingAppointments = overlappingAppointments.stream()
+                .filter(app -> app.getDoctor().getId() == doctor.getId())
+                .collect(Collectors.toList());
         return overlappingAppointments.isEmpty();
     }
 
