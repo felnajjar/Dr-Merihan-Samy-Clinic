@@ -20,7 +20,7 @@ i {
   padding: 0 0.25em;
 }
 
-footer {
+.footer {
   position: absolute;
   bottom: 0;
   width: 100%;
