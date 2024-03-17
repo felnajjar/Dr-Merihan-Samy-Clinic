@@ -2,6 +2,7 @@ package dr.merihan.samy.clinic_app.Controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import dr.merihan.samy.clinic_app.Models.Admin;
@@ -123,9 +124,22 @@ public class AdminController {
     }
 
     @PostMapping("/addDoctor")
-    public String saveDoctor(@ModelAttribute Doctor doctor) {
-        doctorService.SaveDoctor(doctor);
-        return "Doctor Added";
+    public String saveDoctor(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+    @RequestParam("email") String email, @RequestParam("phone") String phone,
+    @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
+        Doctor doctor=new Doctor();
+        doctor.setFirstName(firstName);
+        doctor.setLastName(lastName);
+        doctor.setEmail(email);
+        doctor.setPhone(phone);
+        String encodedpassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        doctor.setPassword(encodedpassword);
+        this.doctorService.SaveDoctor(doctor);
+        session.setAttribute("userId", doctor.getId());
+        session.setAttribute("firstName", doctor.getFirstName());
+        session.setAttribute("email", doctor.getEmail());
+
+        return "Saved";
     }
 
     @GetMapping("/editDoctor/{id}")
