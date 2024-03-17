@@ -48,6 +48,16 @@ public class PatientController {
         this.doctorService = doctorService;
     }
 
+    @GetMapping("/login")
+    public ModelAndView loginRedirect() {
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping("/registration")
+    public ModelAndView registerRedirect() {
+        return new ModelAndView("redirect:/");
+    }
+
     @PostMapping("/registration")
     public ModelAndView register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
             @RequestParam("email") String email, @RequestParam("phone") String phone,
@@ -163,7 +173,7 @@ public class PatientController {
             return new ModelAndView("redirect:/patient/book#slotNotAvailable");
         }
         this.appointmentService.saveAppointment(appointment);
-        return new ModelAndView("redirect:/patient/appointments");
+        return new ModelAndView("redirect:/patient/appointments#bookSuccess");
     }
 
 }

@@ -38,17 +38,10 @@ public class AdminController {
         this.patientService = patientService;
         this.doctorService = doctorService;
     }
-
+    
     @GetMapping("/")
-    public ModelAndView homepage(HttpSession session) {
-        ModelAndView mav = new ModelAndView("admin_home.html");
-        if (session.getAttribute("admin_email") == null) {
-            return new ModelAndView("redirect:/admin/login");
-        }
-        mav.addObject("admin_email", session.getAttribute("admin_email"));
-        mav.addObject("page_name", "Dashboard");
-
-        return mav;
+    public ModelAndView homepage() {
+        return new ModelAndView("redirect:/admin/patients");
     }
 
     @GetMapping("/login")
