@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/admin")
@@ -31,13 +31,12 @@ public class AdminController {
     private final AdminService adminService;
     private final PatientService patientService;
     private final DoctorService doctorService;
-    
-    public AdminController(AdminService adminService,PatientService patientService,DoctorService doctorService) {
-       this.adminService=adminService;
-       this.patientService=patientService;
-       this.doctorService=doctorService;
-    }
 
+    public AdminController(AdminService adminService, PatientService patientService, DoctorService doctorService) {
+        this.adminService = adminService;
+        this.patientService = patientService;
+        this.doctorService = doctorService;
+    }
 
     @GetMapping("/addPatient")
     public ModelAndView addPatient() {
@@ -49,37 +48,64 @@ public class AdminController {
 
     @PostMapping("/addPatient")
     public String savePatient(@ModelAttribute Patient patient) {
-           patientService.savePatient(patient);
-           return "Patient Added";
+        patientService.savePatient(patient);
+        return "Patient Added";
+    }
+
+    @GetMapping("/editPatient/{id}")
+    public ModelAndView editPatientForm(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("");
+        Patient patient = patientService.getPatientById(id);
+        mav.addObject("patient", patient);
+        return mav;
+    }
+
+    @PostMapping("/editPatient")
+    public String editPatient(@ModelAttribute Patient patient) {
+        patientService.savePatient(patient);
+        return "Patient Updated";
     }
 
     @DeleteMapping("/deletePatient/{id}")
     public String deletePatient(@PathVariable int id) {
         patientService.deletePatient(id);
-        return"deleted";
+        return "deleted";
     }
 
     @GetMapping("/addDoctor")
     public ModelAndView addDoctor() {
         ModelAndView mav = new ModelAndView("");
-        Doctor newdoctor=new Doctor();
+        Doctor newdoctor = new Doctor();
         mav.addObject("doctor", newdoctor);
         return mav;
     }
 
     @PostMapping("/addDoctor")
     public String saveDoctor(@ModelAttribute Doctor doctor) {
-           doctorService.SaveDoctor(doctor);
-           return "Doctor Added";
+        doctorService.SaveDoctor(doctor);
+        return "Doctor Added";
+    }
+
+    @GetMapping("/editDoctor/{id}")
+    public ModelAndView editDoctorForm(@PathVariable int id) {
+        ModelAndView mav = new ModelAndView("");
+        Doctor doctor = doctorService.getByDoctorId(id);
+        mav.addObject("doctor", doctor);
+        return mav;
+    }
+
+    @PostMapping("/editDoctor")
+    public String editDoctor(@ModelAttribute Doctor doctor) {
+        doctorService.SaveDoctor(doctor);
+        return "Patient Updated";
     }
 
     @DeleteMapping("/deleteDoctor/{id}")
     public String deleteDoctor(@PathVariable int id) {
         doctorService.deleteDoctor(id);
-        return"deleted";
+        return "deleted";
     }
 
-    
     @GetMapping("/adminLogin")
     public ModelAndView adminLogin() {
         ModelAndView mav = new ModelAndView();

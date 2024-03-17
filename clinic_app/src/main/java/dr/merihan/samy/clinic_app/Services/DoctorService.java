@@ -28,4 +28,5 @@ public class DoctorService {
     public void deleteDoctor(int id){
         doctorRepository.deleteById(id);
     }
+  
 }

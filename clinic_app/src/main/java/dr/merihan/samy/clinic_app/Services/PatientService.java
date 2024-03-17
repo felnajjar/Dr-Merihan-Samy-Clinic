@@ -26,4 +26,7 @@ public class PatientService {
     public void deletePatient(int id){
         patientRepository.deleteById(id);
     }
+    public Patient getPatientById(int id) {
+        return patientRepository.findById(id);
+    }
 }
