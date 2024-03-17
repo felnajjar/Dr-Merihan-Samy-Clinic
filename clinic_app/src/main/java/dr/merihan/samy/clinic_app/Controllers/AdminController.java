@@ -10,6 +10,7 @@ import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.AdminRepository;
 import dr.merihan.samy.clinic_app.Services.AdminService;
+import dr.merihan.samy.clinic_app.Services.AnnouncementService;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
 import dr.merihan.samy.clinic_app.Services.PatientService;
@@ -32,11 +33,13 @@ public class AdminController {
     private final AdminService adminService;
     private final PatientService patientService;
     private final DoctorService doctorService;
+    private final AnnouncementService announcementService;
 
-    public AdminController(AdminService adminService, PatientService patientService, DoctorService doctorService) {
+    public AdminController(AdminService adminService, PatientService patientService, DoctorService doctorService, AnnouncementService announcementService) {
         this.adminService = adminService;
         this.patientService = patientService;
         this.doctorService = doctorService;
+        this.announcementService = announcementService;
     }
 
     @GetMapping("/")
@@ -163,6 +166,24 @@ public class AdminController {
     public ModelAndView deleteDoctor(@PathVariable int id) {
         doctorService.deleteDoctor(id);
         return new ModelAndView("redirect:/admin/doctors#deleted");
+    }
+
+    @GetMapping("/announcements")
+    public ModelAndView announcements(HttpSession session) {
+        ModelAndView mav = new ModelAndView("admin_announcements.html");
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
+        mav.addObject("announcements", announcementService.getAllAnnouncements());
+        mav.addObject("admin_email", session.getAttribute("admin_email"));
+        mav.addObject("page_name", "Announcements");
+        return mav;
+    }
+
+    @GetMapping("/deleteAnnouncement/{id}")
+    public ModelAndView deleteAnnouncement(@PathVariable int id) {
+        announcementService.deleteAnnouncements(id);
+        return new ModelAndView("redirect:/admin/announcements#deleted");
     }
 
 }

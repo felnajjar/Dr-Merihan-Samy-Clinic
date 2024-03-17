@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+  <div th:replace="~{components/admin_header :: head}"></div>
+  <body class="bg-light">
+    <div th:replace="~{components/admin_header :: nav}"></div>
+    <!-- Main content -->
+
+    <br><br>
+    <div class="container">
+      <div class="row">
+        <h1 class="mb-4">📢  Announcement</h1>
+
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Message</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Doctor</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="announcement : ${announcements}">
+              <td th:text="${announcement.id}"></td>
+              <td th:text="${announcement.message}"></td>
+              <td th:text="${announcement.createdAt}"></td>
+              <td th:text="${announcement.doctor.firstName + ' ' + announcement.doctor.lastName}"></td>
+              <td>
+                <a th:href="@{'/admin/deleteAnnouncement/' + ${announcement.id}}" class="btn btn-danger btn-sm">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+      <!-- Toasts -->
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="deleted" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Announcement deleted
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+    <!------------------>
+    <div th:replace="~{components/admin_footer :: footer}"></div>
+  </body>
+</html>

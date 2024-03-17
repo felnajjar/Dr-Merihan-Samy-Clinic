@@ -42,7 +42,7 @@ CREATE TABLE `admin` (
 CREATE TABLE `announcement` (
   `id` int(11) NOT NULL,
   `message` varchar(5000) NOT NULL,
-  `admin_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -117,7 +117,7 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `announcement`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `admin_id` (`admin_id`);
+  ADD KEY `doctor_id` (`doctor_id`);
 
 --
 -- Indexes for table `appointment`
@@ -194,7 +194,7 @@ ALTER TABLE `review`
 -- Constraints for table `announcement`
 --
 ALTER TABLE `announcement`
-  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `announcement_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `appointment`

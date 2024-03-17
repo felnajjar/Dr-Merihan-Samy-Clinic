@@ -142,8 +142,7 @@ public class PatientController {
         if (session.getAttribute("email") == null) {
             return new ModelAndView("redirect:/patient/login");
         }
-        Patient patient =new Patient();
-        List<Announcement> announcements=this.announcementService.getByPatientId(patient.getId());
+        List<Announcement> announcements=this.announcementService.getAllAnnouncements();
         mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
         mav.addObject("page_name", "Announcements");

@@ -13,14 +13,11 @@ public class AnnouncementService {
     @Autowired
     private AnnouncementRepository announcementRepository;
 
-    public List<Announcement>getAllannouncements(){
+    public List<Announcement>getAllAnnouncements(){
         return announcementRepository.findAll();
     }
     public List<Announcement> getByDoctorId(int id){
         return announcementRepository.findAllByDoctorId(id);
-    }
-    public List<Announcement> getByPatientId(int id){
-        return announcementRepository.findAllByPatientId(id);
     }
     public void saveAnnouncemet(Announcement announcement){
         announcementRepository.save(announcement);
