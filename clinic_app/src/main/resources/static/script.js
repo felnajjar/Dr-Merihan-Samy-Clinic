@@ -35,5 +35,13 @@ window.onload = (event) => {
     let elem = document.getElementById("invalidDuration");
     let toast = new bootstrap.Toast(elem);
     toast.show();
+  } else if (window.location.hash === "#emailExists") {
+    let elem = document.getElementById("emailExists");
+    let toast = new bootstrap.Toast(elem);
+    toast.show();
+  } else if (window.location.hash === "#passwordLength") {
+    let elem = document.getElementById("passwordLength");
+    let toast = new bootstrap.Toast(elem);
+    toast.show();
   }
 };

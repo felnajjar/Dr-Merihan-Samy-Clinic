@@ -66,6 +66,12 @@ public class PatientController {
         patient.setLastName(lastName);
         patient.setEmail(email);
         patient.setPhone(phone);
+        if (this.patientService.getByPatientEmail(email) != null) {
+            return new ModelAndView("redirect:/#emailExists");
+        }
+        if (password.length() < 8) {
+            return new ModelAndView("redirect:/#passwordLength");
+        }
         String encodedpassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
         patient.setPassword(encodedpassword);
         this.patientService.savePatient(patient);

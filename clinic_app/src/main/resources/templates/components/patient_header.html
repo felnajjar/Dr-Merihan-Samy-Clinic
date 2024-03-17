@@ -34,9 +34,9 @@
             <li class="nav-item">
               <a class="nav-link" th:classappend="${page_name == 'Home'} ? 'active' : ''" href="/">Home</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" th:classappend="${page_name == 'Services'} ? 'active' : ''" href="/services">Services</a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a th:if="${email == null}" class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#signInModal">Announcements</a>
               <a th:if="${email}" class="nav-link" th:classappend="${page_name == 'Announcements'} ? 'active' : ''" href="/patient/announcements">Announcements</a>
@@ -90,6 +90,26 @@
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
         </div>
+      </div>
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="emailExists" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              <strong>Email already exists!</strong> Login or use a different email.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>  
+      </div>
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="passwordLength" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              <strong>Password too short!</strong> Please use a password of at least 8 characters.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>  
       </div>
       <!-- Sign in Modal -->
       <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel" aria-hidden="true">
