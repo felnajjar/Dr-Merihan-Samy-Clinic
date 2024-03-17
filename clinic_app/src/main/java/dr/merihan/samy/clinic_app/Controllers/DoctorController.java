@@ -24,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {
@@ -33,32 +31,60 @@ public class DoctorController {
     private final DoctorService doctorService;
     private final AppointmentService appointmentService;
 
-    public DoctorController(DoctorService doctorService,AppointmentService appointmentService){
-        this.doctorService=doctorService;
-        this.appointmentService=appointmentService;
+    public DoctorController(DoctorService doctorService, AppointmentService appointmentService) {
+        this.doctorService = doctorService;
+        this.appointmentService = appointmentService;
     }
-   
-        @GetMapping("/login")
-    public ModelAndView doctorLogin() {
-        ModelAndView mav = new ModelAndView();
-        Doctor newDoctor = new Doctor();
-        mav.addObject("doctor", newDoctor);
-        return mav;
+
+    @GetMapping("/")
+    public ModelAndView homepage() {
+        return new ModelAndView("redirect:/doctor/appointments");
+    }
+
+    @GetMapping("/login")
+    public ModelAndView adminLogin() {
+        return new ModelAndView("doctor_login.html");
     }
 
     @PostMapping("/login")
-    public RedirectView loginprocess(@RequestParam("firstname") String firstName, @RequestParam("password") String password,
+    public RedirectView loginProcess(@RequestParam("email") String email,
+            @RequestParam("password") String password,
             HttpSession session) {
-            Doctor dbDoctor = this.doctorService.getByFirstName(firstName);
-             Boolean isPasswordMatched = BCrypt.checkpw(password, dbDoctor.getPassword());
+        Doctor dbDoctor = this.doctorService.getByEmail(email);
+        if (dbDoctor == null) {
+            return new RedirectView("/doctor/login#loginFailed");
+        }
+        Boolean isPasswordMatched = BCrypt.checkpw(password, dbDoctor.getPassword());
         if (isPasswordMatched) {
-            session.setAttribute("userId", dbDoctor.getId());
-            session.setAttribute("Email", dbDoctor.getEmail());
-            return new RedirectView();
+            session.setAttribute("doctor_email", dbDoctor.getEmail());
+            return new RedirectView("/doctor/appointments");
         } else {
-            return new RedirectView();
+            return new RedirectView("/doctor/login#loginFailed");
         }
     }
+
+    @GetMapping("/appointments")
+    public ModelAndView getAppointments(HttpSession session) {
+        ModelAndView mav = new ModelAndView("doctor_appointments.html");
+        if (session.getAttribute("doctor_email") == null) {
+            return new ModelAndView("redirect:/doctor/login");
+        }
+        mav.addObject("doctor_email", session.getAttribute("doctor_email"));
+        mav.addObject("page_name", "Appointments");
+        return mav;
+    }
+
+    @GetMapping("/announcements")
+    public ModelAndView getAnnouncements(HttpSession session) {
+        ModelAndView mav = new ModelAndView("doctor_announcements.html");
+        if (session.getAttribute("doctor_email") == null) {
+            return new ModelAndView("redirect:/doctor/login");
+        }
+        mav.addObject("doctor_email", session.getAttribute("doctor_email"));
+        mav.addObject("page_name", "Announcements");
+        return mav;
+    }
+
     @GetMapping("/setannouncement")
     public ModelAndView setAnnouncementPage() {
         return new ModelAndView("setannouncement");
@@ -78,14 +104,4 @@ public class DoctorController {
         return new RedirectView("");
     }
 
-    @GetMapping("/appointments")
-    public ModelAndView getAllAppointments(@RequestParam String param) {
-        ModelAndView mav=new ModelAndView();
-        List<Appointment>appointments=this.appointmentService.getAllAppointments();
-        mav.addObject("appointments", appointments);
-        return mav;
-    }
-    
-
-    
 }

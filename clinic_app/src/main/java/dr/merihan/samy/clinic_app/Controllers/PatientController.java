@@ -101,7 +101,7 @@ public class PatientController {
 
     @GetMapping("/book")
     public ModelAndView bookAppointment(HttpSession session) {
-        ModelAndView mav = new ModelAndView("bookAppointment.html");
+        ModelAndView mav = new ModelAndView("patient_book.html");
 
         Appointment appointment = new Appointment();
         LocalDateTime now = LocalDateTime.now();
@@ -115,7 +115,7 @@ public class PatientController {
         List<Doctor> doctors = this.doctorService.getAllDoctors();
         mav.addObject("doctors", doctors);
         
-        mav.addObject("pageName", "Book Appointment");
+        mav.addObject("page_name", "Book Appointment");
         mav.addObject("firstName", session.getAttribute("firstName"));
         mav.addObject("email", session.getAttribute("email"));
         mav.addObject("userId", session.getAttribute("userId"));

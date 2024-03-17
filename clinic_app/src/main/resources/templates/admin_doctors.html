@@ -8,10 +8,12 @@
     <br><br>
     <div class="container">
       <div class="row">
-        <h1 class="mb-4">Doctors</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
-          Add Doctor
-        </button>
+        <h1 class="mb-4">🩺  Doctors
+          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addDoctorModal" style="margin-top: -6px;">
+            +
+          </button>
+        </h1>
+
       </div>
       <div class="row">
         <table class="table table-striped">
@@ -42,7 +44,45 @@
       </div>
     </div>
 
-
+    <!-- Add Doctor Modal -->
+    <div class="modal fade" id="addDoctorModal" tabindex="-1" role="dialog" aria-labelledby="addDoctorModalLabel" aria-hidden="true" data-bs-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addDoctorModalLabel">Add Doctor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="addDoctorForm" action="/admin/addDoctor" method="post">
+            <div class="modal-body">
+              <p>
+                Enter the doctor's details below.
+              </p>
+              <!-- Add Doctor form -->
+              <div class="form-row mb-3">
+                <div class="form-group col-md-5 mb-3" style="float:left">
+                  <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
+                </div>
+                <div class="form-group col-md-6 mb-3" style="float:right">
+                  <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Email" required>
+              </div>
+              <div class="form-group mb-3">
+                <input type="tel" class="form-control" name="phone" placeholder="Phone number" required>
+              </div>
+              <div class="form-group mb-3">
+                <input type="password" class="form-control"  name="password" placeholder="Password" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add Doctor</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     
     <!------------------>
     <div th:replace="~{components/admin_footer :: footer}"></div>

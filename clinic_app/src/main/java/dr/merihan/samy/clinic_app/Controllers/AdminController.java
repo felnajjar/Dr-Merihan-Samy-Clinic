@@ -46,7 +46,7 @@ public class AdminController {
             return new ModelAndView("redirect:/admin/login");
         }
         mav.addObject("admin_email", session.getAttribute("admin_email"));
-        mav.addObject("pageName", "Dashboard");
+        mav.addObject("page_name", "Dashboard");
 
         return mav;
     }
@@ -60,11 +60,16 @@ public class AdminController {
     public RedirectView adminLoginProcess(@RequestParam("email") String email,
             @RequestParam("password") String password, HttpSession session) {
         Admin dbaAdmin = this.adminService.getAdminByEmail(email);
+        if (dbaAdmin == null) {
+            return new RedirectView("/admin/login#loginFailed");
+        }
         Boolean isPasswordMatched = password.equals(dbaAdmin.getPassword());
         if (isPasswordMatched) {
             session.setAttribute("admin_email", dbaAdmin.getEmail());
+            return new RedirectView("/admin/");
+        } else {
+            return new RedirectView("/admin/login#loginFailed");
         }
-        return new RedirectView("/admin/");
     }
 
     @GetMapping("/logout")
@@ -83,7 +88,7 @@ public class AdminController {
             return new ModelAndView("redirect:/admin/login");
         }
         mav.addObject("admin_email", session.getAttribute("admin_email"));
-        mav.addObject("pageName", "Patients");
+        mav.addObject("page_name", "Patients");
         mav.addObject("patients", patientService.getAllPatients());
         return mav;
     }
@@ -118,13 +123,13 @@ public class AdminController {
             return new ModelAndView("redirect:/admin/login");
         }
         mav.addObject("admin_email", session.getAttribute("admin_email"));
-        mav.addObject("pageName", "Doctors");
+        mav.addObject("page_name", "Doctors");
         mav.addObject("doctors", doctorService.getAllDoctors());
         return mav;
     }
 
     @PostMapping("/addDoctor")
-    public String saveDoctor(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+    public ModelAndView saveDoctor(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
     @RequestParam("email") String email, @RequestParam("phone") String phone,
     @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
         Doctor doctor=new Doctor();
@@ -139,7 +144,7 @@ public class AdminController {
         session.setAttribute("firstName", doctor.getFirstName());
         session.setAttribute("email", doctor.getEmail());
 
-        return "Saved";
+        return new ModelAndView("redirect:/admin/doctors");
     }
 
     @GetMapping("/editDoctor/{id}")
