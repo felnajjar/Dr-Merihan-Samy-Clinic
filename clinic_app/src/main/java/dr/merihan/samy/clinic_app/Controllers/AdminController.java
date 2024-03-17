@@ -41,7 +41,7 @@ public class AdminController {
     @GetMapping("/")
     public ModelAndView homepage(HttpSession session) {
         ModelAndView mav = new ModelAndView("admin_home.html");
-        if (session.getAttribute("email") == null) {
+        if (session.getAttribute("admin_email") == null) {
             return new ModelAndView("redirect:/admin/login");
         }
         mav.addObject("admin_email", session.getAttribute("admin_email"));
@@ -50,18 +50,41 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/addPatient")
-    public ModelAndView addPatient() {
-        ModelAndView mav = new ModelAndView("");
-        Patient newpatient = new Patient();
-        mav.addObject("patient", newpatient);
-        return mav;
+    @GetMapping("/login")
+    public ModelAndView adminLogin() {
+        return new ModelAndView("admin_login.html");
     }
 
-    @PostMapping("/addPatient")
-    public String savePatient(@ModelAttribute Patient patient) {
-        patientService.savePatient(patient);
-        return "Patient Added";
+    @PostMapping("/login")
+    public RedirectView adminLoginProcess(@RequestParam("email") String email,
+            @RequestParam("password") String password, HttpSession session) {
+        Admin dbaAdmin = this.adminService.getAdminByEmail(email);
+        Boolean isPasswordMatched = password.equals(dbaAdmin.getPassword());
+        if (isPasswordMatched) {
+            session.setAttribute("admin_email", dbaAdmin.getEmail());
+        }
+        return new RedirectView("/admin/");
+    }
+
+    @GetMapping("/logout")
+    public RedirectView logout(HttpSession session) {
+        session.invalidate();
+        return new RedirectView("/admin/");
+    }
+
+    // Patients CRUD
+    //////////////////////////////
+
+    @GetMapping("/patients")
+    public ModelAndView patients(HttpSession session) {
+        ModelAndView mav = new ModelAndView("admin_patients.html");
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
+        mav.addObject("admin_email", session.getAttribute("admin_email"));
+        mav.addObject("pageName", "Patients");
+        mav.addObject("patients", patientService.getAllPatients());
+        return mav;
     }
 
     @GetMapping("/editPatient/{id}")
@@ -73,22 +96,29 @@ public class AdminController {
     }
 
     @PostMapping("/editPatient")
-    public String editPatient(@ModelAttribute Patient patient) {
+    public ModelAndView editPatient(@ModelAttribute Patient patient) {
         patientService.savePatient(patient);
-        return "Patient Updated";
+        return new ModelAndView("redirect:/admin/patients");
     }
 
-    @DeleteMapping("/deletePatient/{id}")
-    public String deletePatient(@PathVariable int id) {
+    @GetMapping("/deletePatient/{id}")
+    public ModelAndView deletePatient(@PathVariable int id) {
         patientService.deletePatient(id);
-        return "deleted";
+        return new ModelAndView("redirect:/admin/patients");
     }
 
-    @GetMapping("/addDoctor")
-    public ModelAndView addDoctor() {
-        ModelAndView mav = new ModelAndView("");
-        Doctor newdoctor = new Doctor();
-        mav.addObject("doctor", newdoctor);
+    // Doctor CRUD
+    //////////////////////////////
+
+    @GetMapping("/doctors")
+    public ModelAndView doctors(HttpSession session) {
+        ModelAndView mav = new ModelAndView("admin_doctors.html");
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
+        mav.addObject("admin_email", session.getAttribute("admin_email"));
+        mav.addObject("pageName", "Doctors");
+        mav.addObject("doctors", doctorService.getAllDoctors());
         return mav;
     }
 
@@ -116,28 +146,6 @@ public class AdminController {
     public String deleteDoctor(@PathVariable int id) {
         doctorService.deleteDoctor(id);
         return "deleted";
-    }
-
-    @GetMapping("/login")
-    public ModelAndView adminLogin() {
-        return new ModelAndView("admin_login.html");
-    }
-
-    @PostMapping("/login")
-    public RedirectView adminLoginProcess(@RequestParam("email") String email,
-            @RequestParam("password") String password, HttpSession session) {
-        Admin dbaAdmin = this.adminService.getAdminByEmail(email);
-        Boolean isPasswordMatched = password.equals(dbaAdmin.getPassword());
-        if (isPasswordMatched) {
-            session.setAttribute("admin_email", dbaAdmin.getEmail());
-        }
-        return new RedirectView("/admin/");
-    }
-
-    @GetMapping("/logout")
-    public RedirectView logout(HttpSession session) {
-        session.invalidate();
-        return new RedirectView("/admin/");
     }
 
 }

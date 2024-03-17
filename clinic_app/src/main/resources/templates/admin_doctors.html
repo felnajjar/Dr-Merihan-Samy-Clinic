@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+  <div th:replace="~{components/admin_header :: head}"></div>
+  <body class="bg-light">
+    <div th:replace="~{components/admin_header :: nav}"></div>
+    <!-- Main content -->
+
+    <br><br>
+    <div class="container">
+      <div class="row">
+        <h1 class="mb-4">Doctors</h1>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
+          Add Doctor
+        </button>
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="doctor : ${doctors}">
+              <td th:text="${doctor.id}"></td>
+              <td th:text="${doctor.firstName}"></td>
+              <td th:text="${doctor.lastName}"></td>
+              <td th:text="${doctor.email}"></td>
+              <td th:text="${doctor.phone}"></td>
+              <td>
+                <a th:href="@{'/admin/doctor/' + ${doctor.id} + '/edit'}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{'/admin/deleteDoctor/' + ${doctor.id}}" class="btn btn-danger btn-sm">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    
+    <!------------------>
+    <div th:replace="~{components/admin_footer :: footer}"></div>
+  </body>
+</html>

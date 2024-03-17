@@ -10,7 +10,6 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./../style.css" />
   </head>
   <body class="bg-light">
     <!-- Universal navbar -->
@@ -34,13 +33,13 @@
               <a class="nav-link" th:classappend="${pageName == 'Dashboard'} ? 'active' : ''" href="/admin/">Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" th:classappend="${pageName == 'Patients'} ? 'active' : ''" href="/admin/patients/">Patients</a>
+              <a class="nav-link" th:classappend="${pageName == 'Patients'} ? 'active' : ''" href="/admin/patients">Patients</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" th:classappend="${pageName == 'Doctors'} ? 'active' : ''" href="/admin/doctors/">Doctors</a>
+              <a class="nav-link" th:classappend="${pageName == 'Doctors'} ? 'active' : ''" href="/admin/doctors">Doctors</a>
             </li>
           </ul>
-          <a href="/admin/logout" th:if="${email}" class="btn btn-outline-primary">Logout</a>
+          <a href="/admin/logout" th:if="${admin_email}" class="btn btn-outline-primary">Logout</a>
         </div>
       </div>
       
