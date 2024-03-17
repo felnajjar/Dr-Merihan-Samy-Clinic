@@ -9,6 +9,7 @@ import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.DoctorRepository;
+import dr.merihan.samy.clinic_app.Services.AnnouncementService;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
 import jakarta.servlet.http.HttpSession;
@@ -30,10 +31,12 @@ public class DoctorController {
 
     private final DoctorService doctorService;
     private final AppointmentService appointmentService;
+    private final AnnouncementService announcementService;
 
-    public DoctorController(DoctorService doctorService, AppointmentService appointmentService) {
+    public DoctorController(DoctorService doctorService, AppointmentService appointmentService,AnnouncementService announcementService) {
         this.doctorService = doctorService;
         this.appointmentService = appointmentService;
+        this.announcementService=announcementService;
     }
 
     @GetMapping("/")
@@ -69,8 +72,11 @@ public class DoctorController {
         if (session.getAttribute("doctor_email") == null) {
             return new ModelAndView("redirect:/doctor/login");
         }
+        Doctor doctor=new Doctor();
+        List<Appointment> appointments=this.appointmentService.getAppointmentsByDoctorId(doctor.getId());
         mav.addObject("doctor_email", session.getAttribute("doctor_email"));
         mav.addObject("page_name", "Appointments");
+        mav.addObject("appointments", appointments);
         return mav;
     }
 
@@ -82,11 +88,15 @@ public class DoctorController {
         }
         mav.addObject("doctor_email", session.getAttribute("doctor_email"));
         mav.addObject("page_name", "Announcements");
+        Doctor doctor=new Doctor();
+        List<Announcement> announcements=this.announcementService.getByDoctorId(doctor.getId());
+        mav.addObject("announcements", announcements);
         return mav;
     }
 
     @GetMapping("/setannouncement")
     public ModelAndView setAnnouncementPage() {
+
         return new ModelAndView("setannouncement");
     }
 
@@ -97,7 +107,7 @@ public class DoctorController {
             Doctor doctor = this.doctorService.getByDoctorId(userId);
             if (doctor != null) {
                 Announcement announcement = new Announcement();
-                announcement.message(announcementContent);
+                announcement.setMessage(announcementContent);
                 return new RedirectView("");
             }
         }
