@@ -4,8 +4,55 @@
   <body class="bg-light">
     <div th:replace="~{components/doctor_header :: nav}"></div>
     <!-- Main content -->
+    
+    <br><br>
+    <div class="container">
+      <div class="row">
+        <h1 class="mb-4">My Appointments</h1>
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Patient</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="appointment : ${appointments}">
+              <td>
+                <span th:text="${appointment.startsAt}"></span> - <span th:text="${appointment.endsAt}"></span>
+              </td>
+              <td>
+                <i class="fa fa-user"></i> <span th:text="${appointment.patient.firstName} + ' ' + ${appointment.patient.lastName}"></span><br>
+                <i class="fa fa-phone"></i> <span th:text="${appointment.patient.email}"></span><br>
+                <i class="fa fa-envelope"></i> <span th:text="${appointment.patient.phone}"></span>
+              </td>
+              <td>
+                <a th:href="@{'/doctor/deleteAppointment/' + ${appointment.id}}" class="btn btn-danger btn-sm">Delete</a>
+              </td>
+            </tr>
+            <tr th:if="${appointments.size() == 0}">
+              <td colspan="3">You don't have any upcoming appointments.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-
+      <!-- Toasts -->
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="deleted" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Appointment deleted
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+    
 
     
     <!------------------>

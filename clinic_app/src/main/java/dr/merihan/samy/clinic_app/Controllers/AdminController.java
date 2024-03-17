@@ -8,24 +8,18 @@ import org.springframework.web.servlet.view.RedirectView;
 import dr.merihan.samy.clinic_app.Models.Admin;
 import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
-import dr.merihan.samy.clinic_app.Repository.AdminRepository;
 import dr.merihan.samy.clinic_app.Services.AdminService;
 import dr.merihan.samy.clinic_app.Services.AnnouncementService;
-import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
 import dr.merihan.samy.clinic_app.Services.PatientService;
 import jakarta.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/admin")
@@ -89,19 +83,14 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/editPatient/{id}")
-    public ModelAndView editPatientForm(@PathVariable int id) {
-        ModelAndView mav = new ModelAndView("");
-        Patient patient = patientService.getPatientById(id);
-        mav.addObject("patient", patient);
-        return mav;
-    }
-
     @PostMapping("/editPatient")
     public ModelAndView editPatient(@RequestParam("id") String id, @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
             @RequestParam("email") String email, @RequestParam("phone") String phone, HttpSession session,
             RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
         Patient patient = patientService.getPatientById(Integer.parseInt(id));
         patient.setFirstName(firstName);
         patient.setLastName(lastName);
@@ -112,7 +101,10 @@ public class AdminController {
     }
 
     @GetMapping("/deletePatient/{id}")
-    public ModelAndView deletePatient(@PathVariable int id) {
+    public ModelAndView deletePatient(@PathVariable int id, HttpSession session) {
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
         patientService.deletePatient(id);
         return new ModelAndView("redirect:/admin/patients#deleted");
     }
@@ -137,6 +129,9 @@ public class AdminController {
             @RequestParam("lastName") String lastName,
             @RequestParam("email") String email, @RequestParam("phone") String phone,
             @RequestParam("password") String password, HttpSession session, RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
         Doctor doctor = new Doctor();
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);
@@ -153,6 +148,9 @@ public class AdminController {
             @RequestParam("lastName") String lastName,
             @RequestParam("email") String email, @RequestParam("phone") String phone, HttpSession session,
             RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
         Doctor doctor = doctorService.getByDoctorId(Integer.parseInt(id));
         doctor.setFirstName(firstName);
         doctor.setLastName(lastName);
@@ -163,7 +161,10 @@ public class AdminController {
     }
 
     @GetMapping("/deleteDoctor/{id}")
-    public ModelAndView deleteDoctor(@PathVariable int id) {
+    public ModelAndView deleteDoctor(@PathVariable int id, HttpSession session) {
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
         doctorService.deleteDoctor(id);
         return new ModelAndView("redirect:/admin/doctors#deleted");
     }
@@ -181,7 +182,10 @@ public class AdminController {
     }
 
     @GetMapping("/deleteAnnouncement/{id}")
-    public ModelAndView deleteAnnouncement(@PathVariable int id) {
+    public ModelAndView deleteAnnouncement(@PathVariable int id, HttpSession session) {
+        if (session.getAttribute("admin_email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
         announcementService.deleteAnnouncements(id);
         return new ModelAndView("redirect:/admin/announcements#deleted");
     }

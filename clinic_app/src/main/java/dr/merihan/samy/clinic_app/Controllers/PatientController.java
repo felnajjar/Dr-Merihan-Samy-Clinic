@@ -9,8 +9,6 @@ import dr.merihan.samy.clinic_app.Models.Announcement;
 import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
-import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
-import dr.merihan.samy.clinic_app.Repository.PatientRepository;
 import dr.merihan.samy.clinic_app.Services.AnnouncementService;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
@@ -26,9 +24,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -156,13 +151,19 @@ public class PatientController {
         if (session.getAttribute("email") == null) {
             return new ModelAndView("redirect:/patient/login");
         }
-        Patient patient = new Patient();
+        Patient patient = patientService.getByPatientEmail(session.getAttribute("email").toString());
         List<Appointment>appointments=this.appointmentService.getAppointmentsByPatientId(patient.getId());
         mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
         mav.addObject("page_name", "My Appointments");
         mav.addObject("appointments", appointments);
         return mav;
+    }
+
+    @GetMapping("/deleteAppointment/{appointmentId}")
+    public ModelAndView deleteAppointment(@PathVariable int appointmentId, HttpSession session) {
+        this.appointmentService.deleteAppointment(appointmentId);
+        return new ModelAndView("redirect:/patient/appointments#deleted");
     }
 
     @PostMapping("/book")

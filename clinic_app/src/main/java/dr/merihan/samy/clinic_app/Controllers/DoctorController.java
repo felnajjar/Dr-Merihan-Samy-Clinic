@@ -7,22 +7,21 @@ import org.springframework.web.servlet.view.RedirectView;
 import dr.merihan.samy.clinic_app.Models.Announcement;
 import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Models.Doctor;
-import dr.merihan.samy.clinic_app.Models.Patient;
-import dr.merihan.samy.clinic_app.Repository.DoctorRepository;
 import dr.merihan.samy.clinic_app.Services.AnnouncementService;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
@@ -33,10 +32,11 @@ public class DoctorController {
     private final AppointmentService appointmentService;
     private final AnnouncementService announcementService;
 
-    public DoctorController(DoctorService doctorService, AppointmentService appointmentService,AnnouncementService announcementService) {
+    public DoctorController(DoctorService doctorService, AppointmentService appointmentService,
+            AnnouncementService announcementService) {
         this.doctorService = doctorService;
         this.appointmentService = appointmentService;
-        this.announcementService=announcementService;
+        this.announcementService = announcementService;
     }
 
     @GetMapping("/")
@@ -73,13 +73,22 @@ public class DoctorController {
         if (session.getAttribute("doctor_email") == null) {
             return new ModelAndView("redirect:/doctor/login");
         }
-        Doctor doctor=new Doctor();
-        List<Appointment> appointments=this.appointmentService.getAppointmentsByDoctorId(doctor.getId());
+        Doctor doctor = doctorService.getByEmail((String) session.getAttribute("doctor_email"));
+        List<Appointment> appointments = this.appointmentService.getAppointmentsByDoctorId(doctor.getId());
         mav.addObject("doctor_email", session.getAttribute("doctor_email"));
         mav.addObject("doctor_name", session.getAttribute("doctor_name"));
         mav.addObject("page_name", "Appointments");
         mav.addObject("appointments", appointments);
         return mav;
+    }
+
+    @GetMapping("/deleteAppointment/{id}")
+    public ModelAndView deleteAppointment(@PathVariable int id, HttpSession session) {
+        if (session.getAttribute("doctor_email") == null) {
+            return new ModelAndView("redirect:/doctor/login");
+        }
+        appointmentService.deleteAppointment(id);
+        return new ModelAndView("redirect:/doctor/appointments#deleted");
     }
 
     @GetMapping("/announcements")
@@ -91,30 +100,33 @@ public class DoctorController {
         mav.addObject("doctor_email", session.getAttribute("doctor_email"));
         mav.addObject("doctor_name", session.getAttribute("doctor_name"));
         mav.addObject("page_name", "Announcements");
-        Doctor doctor=new Doctor();
-        List<Announcement> announcements=this.announcementService.getByDoctorId(doctor.getId());
+        Doctor doctor = doctorService.getByEmail((String) session.getAttribute("doctor_email"));
+        List<Announcement> announcements = this.announcementService.getByDoctorId(doctor.getId());
         mav.addObject("announcements", announcements);
         return mav;
     }
 
-    @GetMapping("/setannouncement")
-    public ModelAndView setAnnouncementPage() {
-
-        return new ModelAndView("setannouncement");
+    @GetMapping("/deleteAnnouncement/{id}")
+    public ModelAndView deleteAnnouncement(@PathVariable int id, HttpSession session) {
+        if (session.getAttribute("doctor_email") == null) {
+            return new ModelAndView("redirect:/doctor/login");
+        }
+        announcementService.deleteAnnouncements(id);
+        return new ModelAndView("redirect:/doctor/announcements#deleted");
     }
 
-    @PostMapping("/setannouncement")
-    public RedirectView setAnnouncement(@RequestParam("announcement") String announcementContent, HttpSession session) {
-        int userId = (int) session.getAttribute("userId");
-        if (userId != 0) {
-            Doctor doctor = this.doctorService.getByDoctorId(userId);
-            if (doctor != null) {
-                Announcement announcement = new Announcement();
-                announcement.setMessage(announcementContent);
-                return new RedirectView("");
-            }
+    @PostMapping("/sendAnnouncement")
+    public RedirectView setAnnouncement(@RequestParam("message") String announcementContent, HttpSession session) {
+        Doctor doctor = this.doctorService.getByEmail((String) session.getAttribute("doctor_email"));
+        if (doctor == null) {
+            return new RedirectView("/doctor/login");
         }
-        return new RedirectView("");
+        Announcement announcement = new Announcement();
+        announcement.setMessage(announcementContent);
+        announcement.setDoctor(doctor);
+        announcement.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        this.announcementService.saveAnnouncement(announcement);
+        return new RedirectView("/doctor/announcements#added");
     }
 
     @GetMapping("/logout")

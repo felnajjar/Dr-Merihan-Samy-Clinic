@@ -19,7 +19,7 @@ public class AnnouncementService {
     public List<Announcement> getByDoctorId(int id){
         return announcementRepository.findAllByDoctorId(id);
     }
-    public void saveAnnouncemet(Announcement announcement){
+    public void saveAnnouncement(Announcement announcement){
         announcementRepository.save(announcement);
     }
     public void deleteAnnouncements(int  id){

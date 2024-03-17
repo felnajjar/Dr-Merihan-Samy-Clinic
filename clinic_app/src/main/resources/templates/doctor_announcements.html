@@ -5,8 +5,67 @@
     <div th:replace="~{components/doctor_header :: nav}"></div>
     <!-- Main content -->
 
+    <br><br>
+    <div class="container">
+      <div class="row">
+        <h1 class="mb-4">My Announcements</h1>
+      </div>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Announcements</th>
+              <th scope="col">Created At</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="announcement : ${announcements}">
+              <td th:text="${announcement.message}"></td>
+              <td th:text="${announcement.createdAt}"></td>
+              <td>
+                <a th:href="@{'/doctor/deleteAnnouncement/' + ${announcement.id}}" class="btn btn-danger btn-sm">Delete</a>
+              </td>
+            </tr>
+            <tr th:if="${announcements.size() == 0}">
+              <td colspan="3">You haven't sent any announcements yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br><hr><br>
+      <div class="row">
+        <form th:action="@{/doctor/sendAnnouncement}" method="post">
+          <div class="mb-3">
+            <label for="message" class="form-label">Send a new announcement:</label>
+            <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+      </div>
+    </div>
 
-
+      <!-- Toasts -->
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="deleted" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Announcement deleted
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              Announcement sent
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
     
     <!------------------>
     <div th:replace="~{components/admin_footer :: footer}"></div>

@@ -1,7 +1,6 @@
 package dr.merihan.samy.clinic_app.Models;
 
 import java.sql.Timestamp;
-import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

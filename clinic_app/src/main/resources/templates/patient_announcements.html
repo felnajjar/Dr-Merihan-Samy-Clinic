@@ -8,15 +8,22 @@
 
     <div class="container mt-5">
       <h1 class="mb-4">View announcements</h1>
-      <div class="row">
+      <div class="row" th:each="announcement : ${announcements}">
         <div class="col-md-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Announcement 1</h5>
-              <p class="card-text">
-                This is the content of the first announcement. You can add any
-                text or links here.
-              </p>
+              <h5 class="card-title">From: <span th:text="${announcement.doctor.firstName} + ' ' + ${announcement.doctor.lastName}"></span></h5>
+              <p class="card-text" th:text="${announcement.message}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" th:if="${announcements.size() == 0}">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">No announcements</h5>
+              <p class="card-text">There are no new announcements at the moment.</p>
             </div>
           </div>
         </div>

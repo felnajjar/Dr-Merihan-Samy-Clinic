@@ -8,9 +8,27 @@
 
     <div class="container mt-5">
       <h1 class="mb-4">My appointments</h1>
-      <div class="row">
+      <div class="row" th:each="appointment : ${appointments}">
         <div class="col-md-6">
-          
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Dr. <span th:text="${appointment.doctor.firstName} + ' ' + ${appointment.doctor.lastName}"></span></h5>
+              <span class="card-text">Starts at: <span th:text="${appointment.startsAt}"></span></span><br>
+              <span class="card-text">Ends at: <span th:text="${appointment.endsAt}"></span></span>
+              <a th:href="@{'/patient/deleteAppointment/' + ${appointment.id}}" class="btn btn-sm btn-outline-danger" style="float: right;">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" th:if="${appointments.size() == 0}">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body" style="padding-bottom: 6px;">
+              <h5 class="card-title">No appointments</h5>
+              <p class="card-text" style="float: left;">You don't have any appointments yet.</p>
+              <a href="/patient/book" class="btn btn-sm btn-outline-primary" style="float: right;">Book</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -22,6 +40,16 @@
         <div class="d-flex">
           <div class="toast-body">
             Appointment booked successfully!
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>  
+    </div>
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+      <div id="deleted" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            Appointment cancelled
           </div>
           <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
