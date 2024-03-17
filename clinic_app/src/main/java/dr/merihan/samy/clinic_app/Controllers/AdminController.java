@@ -38,6 +38,15 @@ public class AdminController {
         this.doctorService = doctorService;
     }
 
+    @GetMapping("/")
+    public ModelAndView homepage(HttpSession session) {
+        ModelAndView mav = new ModelAndView("admin_home.html");
+        if (session.getAttribute("email") == null) {
+            return new ModelAndView("redirect:/admin/login");
+        }
+        return mav;
+    }
+
     @GetMapping("/addPatient")
     public ModelAndView addPatient() {
         ModelAndView mav = new ModelAndView("");
@@ -106,15 +115,12 @@ public class AdminController {
         return "deleted";
     }
 
-    @GetMapping("/adminLogin")
+    @GetMapping("/login")
     public ModelAndView adminLogin() {
-        ModelAndView mav = new ModelAndView();
-        Admin admin = new Admin();
-        mav.addObject("admin", admin);
-        return mav;
+        return new ModelAndView("admin_login.html");
     }
 
-    @PostMapping("/adminLogin")
+    @PostMapping("/login")
     public RedirectView adminLoginProcess(@RequestParam("email") String email,
             @RequestParam("password") String password, HttpSession session) {
         Admin dbaAdmin = this.adminService.getAdminByEmail(email);

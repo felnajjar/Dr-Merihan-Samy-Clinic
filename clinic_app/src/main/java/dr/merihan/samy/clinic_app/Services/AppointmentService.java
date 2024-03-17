@@ -15,8 +15,8 @@ import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
 public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
-    
-     public List<Appointment> getAllAppointments() {
+
+    public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
 
@@ -36,11 +36,12 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
-        public boolean isAppointmentSlotAvailable(Appointment appointment) {
-            Doctor doctor = appointment.getDoctor();
-            Timestamp startsAt = appointment.getStartsAt();
-            Timestamp endsAt = appointment.getEndsAt();
-        List<Appointment> overlappingAppointments = appointmentRepository.findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(doctor.getId(), startsAt, endsAt, startsAt, endsAt);
+    public boolean isAppointmentSlotAvailable(Appointment appointment) {
+        Doctor doctor = appointment.getDoctor();
+        Timestamp startsAt = appointment.getStartsAt();
+        Timestamp endsAt = appointment.getEndsAt();
+        List<Appointment> overlappingAppointments = appointmentRepository
+                .findByDoctorIdAndStartsAtBetweenOrEndsAtBetween(doctor.getId(), startsAt, endsAt, startsAt, endsAt);
         return overlappingAppointments.isEmpty();
     }
 
@@ -48,5 +49,4 @@ public class AppointmentService {
         appointmentRepository.deleteById(id);
     }
 
-	
 }
