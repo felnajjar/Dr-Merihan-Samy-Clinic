@@ -9,6 +9,6 @@ import dr.merihan.samy.clinic_app.Models.Announcement;
 public interface AnnouncementRepository extends JpaRepository<Announcement, Integer> {
      List<Announcement>findAll();
      List<Announcement> findAllByDoctorId(int id);
-
+     List<Announcement> findAllByPatientId(int id);
 
 }

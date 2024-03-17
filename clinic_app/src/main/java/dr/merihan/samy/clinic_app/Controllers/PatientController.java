@@ -5,11 +5,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import dr.merihan.samy.clinic_app.Models.Announcement;
 import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.AppointmentRepository;
 import dr.merihan.samy.clinic_app.Repository.PatientRepository;
+import dr.merihan.samy.clinic_app.Services.AnnouncementService;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
 import dr.merihan.samy.clinic_app.Services.PatientService;
@@ -40,12 +42,14 @@ public class PatientController {
     private final PatientService patientService;
     private final AppointmentService appointmentService;
     private final DoctorService doctorService;
+    private final AnnouncementService announcementService;
 
     public PatientController(PatientService patientService, AppointmentService appointmentService,
-            DoctorService doctorService) {
+            DoctorService doctorService,AnnouncementService announcementService) {
         this.patientService = patientService;
         this.appointmentService = appointmentService;
         this.doctorService = doctorService;
+        this.announcementService=announcementService;
     }
 
     @GetMapping("/login")
@@ -138,9 +142,12 @@ public class PatientController {
         if (session.getAttribute("email") == null) {
             return new ModelAndView("redirect:/patient/login");
         }
+        Patient patient =new Patient();
+        List<Announcement> announcements=this.announcementService.getByPatientId(patient.getId());
         mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
         mav.addObject("page_name", "Announcements");
+        mav.addObject("announcements", announcements);
         return mav;
     }
 
@@ -150,9 +157,12 @@ public class PatientController {
         if (session.getAttribute("email") == null) {
             return new ModelAndView("redirect:/patient/login");
         }
+        Patient patient = new Patient();
+        List<Appointment>appointments=this.appointmentService.getAppointmentsByPatientId(patient.getId());
         mav.addObject("first_name", session.getAttribute("first_name"));
         mav.addObject("email", session.getAttribute("email"));
         mav.addObject("page_name", "My Appointments");
+        mav.addObject("appointments", appointments);
         return mav;
     }
 

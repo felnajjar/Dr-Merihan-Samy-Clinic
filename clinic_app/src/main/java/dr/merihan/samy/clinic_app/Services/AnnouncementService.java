@@ -19,6 +19,9 @@ public class AnnouncementService {
     public List<Announcement> getByDoctorId(int id){
         return announcementRepository.findAllByDoctorId(id);
     }
+    public List<Announcement> getByPatientId(int id){
+        return announcementRepository.findAllByPatientId(id);
+    }
     public void saveAnnouncemet(Announcement announcement){
         announcementRepository.save(announcement);
     }

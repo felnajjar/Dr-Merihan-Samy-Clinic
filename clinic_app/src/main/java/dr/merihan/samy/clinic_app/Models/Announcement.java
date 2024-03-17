@@ -14,23 +14,23 @@ public class Announcement {
     private Timestamp createdAt;
 
     @OneToOne
-    private Admin admin;
+    private Doctor doctor;
 
     public Announcement() {
     }
 
-    public Announcement(int id, String message, Timestamp createdAt, Admin admin) {
+    public Announcement(int id, String message, Timestamp createdAt, Doctor doctor) {
         this.id = id;
         this.message = message;
         this.createdAt = createdAt;
-        this.admin = admin;
+        this.doctor = doctor;
     }
 
-    public int getAnnouncementId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setAnnouncementId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -50,16 +50,16 @@ public class Announcement {
         this.createdAt = createdAt;
     }
 
-    public Admin getAdmin() {
-        return this.admin;
+    public Doctor getDoctor() {
+        return this.doctor;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public Announcement id(int id) {
-        setAnnouncementId(id);
+        setId(id);
         return this;
     }
 
@@ -73,8 +73,8 @@ public class Announcement {
         return this;
     }
 
-    public Announcement admin(Admin admin) {
-        setAdmin(admin);
+    public Announcement doctor(Doctor doctor) {
+        setDoctor(doctor);
         return this;
     }
 
@@ -86,23 +86,23 @@ public class Announcement {
             return false;
         }
         Announcement announcement = (Announcement) o;
-        return id == announcement.id && Objects.equals(message, announcement.message)
-                && Objects.equals(createdAt, announcement.createdAt) && Objects.equals(admin, announcement.admin);
+        return id == announcement.id && Objects.equals(message, announcement.message) && Objects.equals(createdAt, announcement.createdAt) && Objects.equals(doctor, announcement.doctor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, message, createdAt, admin);
+        return Objects.hash(id, message, createdAt, doctor);
     }
 
     @Override
     public String toString() {
         return "{" +
-                " id='" + getAnnouncementId() + "'" +
-                ", message='" + getMessage() + "'" +
-                ", createdAt='" + getCreatedAt() + "'" +
-                ", admin='" + getAdmin() + "'" +
-                "}";
+            " id='" + getId() + "'" +
+            ", message='" + getMessage() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", doctor='" + getDoctor() + "'" +
+            "}";
     }
 
+   
 }
