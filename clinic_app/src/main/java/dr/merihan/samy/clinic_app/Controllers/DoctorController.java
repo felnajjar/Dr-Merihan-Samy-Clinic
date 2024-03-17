@@ -5,15 +5,20 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import dr.merihan.samy.clinic_app.Models.Announcement;
+import dr.merihan.samy.clinic_app.Models.Appointment;
 import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.DoctorRepository;
+import dr.merihan.samy.clinic_app.Services.AppointmentService;
 import dr.merihan.samy.clinic_app.Services.DoctorService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +31,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class DoctorController {
 
     private final DoctorService doctorService;
+    private final AppointmentService appointmentService;
 
-    public DoctorController(DoctorService doctorService){
+    public DoctorController(DoctorService doctorService,AppointmentService appointmentService){
         this.doctorService=doctorService;
+        this.appointmentService=appointmentService;
     }
    
         @GetMapping("/login")
@@ -70,6 +77,15 @@ public class DoctorController {
         }
         return new RedirectView("");
     }
+
+    @GetMapping("/appointments")
+    public ModelAndView getAllAppointments(@RequestParam String param) {
+        ModelAndView mav=new ModelAndView();
+        List<Appointment>appointments=this.appointmentService.getAllAppointments();
+        mav.addObject("appointments", appointments);
+        return mav;
+    }
+    
 
     
 }

@@ -156,7 +156,7 @@ public class AdminController {
         return "Patient Updated";
     }
 
-    @DeleteMapping("/deleteDoctor/{id}")
+    @GetMapping("/deleteDoctor/{id}")
     public String deleteDoctor(@PathVariable int id) {
         doctorService.deleteDoctor(id);
         return "deleted";
