@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -119,6 +121,25 @@ public class PatientController {
         mav.addObject("userId", session.getAttribute("userId"));
         mav.addObject("appointment", appointment);
         return mav;
+    }
+
+    
+    @PostMapping("/book")
+    public String setAppointment(@RequestParam("startsAt") String startsAt,@RequestParam("endsAt") String endsAt,@ModelAttribute Doctor doctor,HttpSession session) {
+        Appointment appointment = new Appointment();
+        Timestamp startsAtDate= Timestamp.valueOf(LocalDateTime.parse(startsAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        Timestamp endsAtDate= Timestamp.valueOf(LocalDateTime.parse(endsAt, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        appointment.setStartsAt(startsAtDate);
+        appointment.setEndsAt(endsAtDate);
+        appointment.setDoctor(doctor);
+        Patient patient = patientService.getByPatientEmail(session.getAttribute("email").toString());
+        appointment.setPatient(patient);
+        boolean isSlotAvailable = appointmentService.isAppointmentSlotAvailable(appointment);
+        if (!isSlotAvailable) {
+            return "Appointment slot is already booked. Please choose another slot.";
+        }
+        this.appointmentService.saveAppointment(appointment);
+        return "Appointment is set";
     }
 
 }

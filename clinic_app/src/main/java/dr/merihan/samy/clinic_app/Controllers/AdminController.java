@@ -5,10 +5,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import dr.merihan.samy.clinic_app.Models.Admin;
+import dr.merihan.samy.clinic_app.Models.Doctor;
 import dr.merihan.samy.clinic_app.Models.Patient;
 import dr.merihan.samy.clinic_app.Repository.AdminRepository;
 import dr.merihan.samy.clinic_app.Services.AdminService;
 import dr.merihan.samy.clinic_app.Services.AppointmentService;
+import dr.merihan.samy.clinic_app.Services.DoctorService;
+import dr.merihan.samy.clinic_app.Services.PatientService;
 import jakarta.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -26,10 +29,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/admin")
 public class AdminController {
     private final AdminService adminService;
-
+    private final PatientService patientService;
+    private final DoctorService doctorService;
     
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService,PatientService patientService,DoctorService doctorService) {
        this.adminService=adminService;
+       this.patientService=patientService;
+       this.doctorService=doctorService;
     }
 
 
@@ -43,38 +49,37 @@ public class AdminController {
 
     @PostMapping("/addPatient")
     public String savePatient(@ModelAttribute Patient patient) {
-        // na2es a save lama a create patient repo
-        return "Patient Added successfully";
+           patientService.savePatient(patient);
+           return "Patient Added";
     }
 
-    @GetMapping("/addAdmin")
-    public ModelAndView addAdmin() {
+    @DeleteMapping("/deletePatient/{id}")
+    public String deletePatient(@PathVariable int id) {
+        patientService.deletePatient(id);
+        return"deleted";
+    }
+
+    @GetMapping("/addDoctor")
+    public ModelAndView addDoctor() {
         ModelAndView mav = new ModelAndView("");
-        Admin newAdmin = new Admin();
-        mav.addObject("Admin", newAdmin);
+        Doctor newdoctor=new Doctor();
+        mav.addObject("doctor", newdoctor);
         return mav;
     }
 
-    @PostMapping("/addAdmin")
-    public String save(@ModelAttribute Admin admin) {
-        this.adminService.saveAdmin(admin);
-        return "Admin added successfully";
+    @PostMapping("/addDoctor")
+    public String saveDoctor(@ModelAttribute Doctor doctor) {
+           doctorService.SaveDoctor(doctor);
+           return "Doctor Added";
     }
 
-    @DeleteMapping("/deletePatient/{patientID}")
-    public String deletePatient(@PathVariable int id) {
-        // if patient exists through given id then delete
-        // if not then display error message
-        return "";
+    @DeleteMapping("/deleteDoctor/{id}")
+    public String deleteDoctor(@PathVariable int id) {
+        doctorService.deleteDoctor(id);
+        return"deleted";
     }
 
-    @DeleteMapping("/deleteAdmin/{adminID}")
-    public String deleteAdmin(@PathVariable int id) {
-        // if admin exists through given id then delete
-        // if not then display error message
-        return "";
-    }
-
+    
     @GetMapping("/adminLogin")
     public ModelAndView adminLogin() {
         ModelAndView mav = new ModelAndView();
