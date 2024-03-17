@@ -44,6 +44,9 @@ public class AdminController {
         if (session.getAttribute("email") == null) {
             return new ModelAndView("redirect:/admin/login");
         }
+        mav.addObject("admin_email", session.getAttribute("admin_email"));
+        mav.addObject("pageName", "Dashboard");
+
         return mav;
     }
 
@@ -124,14 +127,17 @@ public class AdminController {
     public RedirectView adminLoginProcess(@RequestParam("email") String email,
             @RequestParam("password") String password, HttpSession session) {
         Admin dbaAdmin = this.adminService.getAdminByEmail(email);
-        Boolean isPasswordMatched = BCrypt.checkpw(password, dbaAdmin.getPassword());
+        Boolean isPasswordMatched = password.equals(dbaAdmin.getPassword());
         if (isPasswordMatched) {
-            session.setAttribute("email", dbaAdmin.getEmail());
-            return new RedirectView();
-        } else {
-            return new RedirectView();
+            session.setAttribute("admin_email", dbaAdmin.getEmail());
         }
+        return new RedirectView("/admin/");
+    }
 
+    @GetMapping("/logout")
+    public RedirectView logout(HttpSession session) {
+        session.invalidate();
+        return new RedirectView("/admin/");
     }
 
 }
